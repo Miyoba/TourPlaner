@@ -4,9 +4,198 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TourPlanner"
+        xmlns:designViewModel="clr-namespace:TourPlanner.DesignViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TourPlanner" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance Type=designViewModel:DesignMainViewModel, IsDesignTimeCreatable=True}">
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
     <Grid>
+        <!-- Initial Grid Layout -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
 
+        <!-- Borders -->
+        <Border Grid.Column="0" BorderThickness="0.5" BorderBrush="Gray"/>
+        <Border Grid.Column="1" BorderThickness="0.5" BorderBrush="Gray"/>
+
+        <!-- Search and List Grid Layout -->
+        <Grid Grid.Column = "0" Grid.Row="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="15*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.25*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Search box and button -->
+            <TextBox Grid.Column = "0" Grid.Row="0" VerticalContentAlignment="Center" Margin="2,2,0,2" MaxHeight="30"/>
+            <Button Grid.Column = "1" Grid.Row="0" Margin="0,2,2,2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="30">
+                <Image Source="/Images/Search_Icon.png" AutomationProperties.HelpText="Search ..."/>
+            </Button>
+
+            <!-- List of existing tours -->
+            <ListBox Grid.Column = "0" Grid.Row="1" Grid.ColumnSpan="2" Margin="2,2,2,2"/>
+        </Grid>
+
+
+        <Grid Grid.Row="0" Grid.Column="1">
+            <!-- Initial TourInput, TourInfo and Log Grid Layout -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Borders -->
+            <Border Grid.Row="0" BorderThickness="0.5" BorderBrush="Gray"/>
+            <Border Grid.Row="1" BorderThickness="0.5" BorderBrush="Gray"/>
+            <Border Grid.Row="2" BorderThickness="0.5" BorderBrush="Gray"/>
+
+            <!-- Tour input Grid Layout -->
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Tour name input -->
+                <StackPanel Grid.Row="0" Grid.Column="0">
+                    <Label Content="Tour name:" VerticalContentAlignment="Top"/>
+                    <TextBox Text="{Binding Name}" Margin="5,0,5,0"></TextBox>
+                </StackPanel>
+
+                <!-- Tour description input -->
+                <StackPanel Grid.Row="0" Grid.Column="1">
+                    <Label Content="Description:" VerticalContentAlignment="Top"/>
+                    <TextBox Text="{Binding Description}" Margin="5,0,5,0"></TextBox>
+                </StackPanel>
+
+                <!-- Route Information input -->
+                <StackPanel Grid.Row="1" Grid.Column="0">
+                    <Label Content="Route Information:" VerticalContentAlignment="Top"/>
+                    <TextBox Text="{Binding RouteInformation}" Margin="5,0,5,0"></TextBox>
+                </StackPanel>
+
+                <!-- Route Information input -->
+                <StackPanel Grid.Row="1" Grid.Column="1">
+                    <Label Content="Distance:" VerticalContentAlignment="Top"/>
+                    <TextBox Text="{Binding Distance}" Margin="5,0,5,0"></TextBox>
+                </StackPanel>
+
+                <!-- Add/Remove Button Grid Layout -->
+                <Grid Grid.Row="1" Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Add/Remove Button -->
+                    <Button Grid.Column = "0" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Add" Command="{Binding AddCommand}"/>
+                    <Button Grid.Column = "1" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Remove"/>
+                </Grid>
+            </Grid>
+
+            <!-- Tour Info Grid Layout -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <DataGrid ItemsSource="{Binding Data}" 
+                          AutoGenerateColumns="False" 
+                          AlternatingRowBackground="LightGray"
+                          CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="2*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Description}" Header="Description" Width="2*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding RouteInformation}" Header="Route-info" Width="2*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Distance}" Header="Distance" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Image Grid.Column="1" Source="/Images/No_Image_Icon.png" AutomationProperties.HelpText="Map Image"/>
+            </Grid>
+
+            <!-- Log Grid Layout -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Log Label -->
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <Label Content="Logs:"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="0">
+
+                    <!-- Log Add/Remove Button Grid Layout -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Log Add/Remove Button -->
+                    <Button Grid.Column = "0" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Add"/>
+                    <Button Grid.Column = "1" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Remove"/>
+                </Grid>
+
+                <!-- Log Information -->
+                <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+                    <DataGrid>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Date/Time" Width="2*"/>
+                            <DataGridTextColumn Header="Report" Width="3*"/>
+                            <DataGridTextColumn Header="Distance" Width="2*"/>
+                            <DataGridTextColumn Header="Total-time" Width="2*"/>
+                            <DataGridTextColumn Header="Rating" Width="1*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
