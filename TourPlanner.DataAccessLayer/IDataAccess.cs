@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TourPlanner.Model;
+﻿using System.Collections.Generic;
+using TourPlanner.Models;
 
 namespace TourPlanner.DataAccessLayer
 {

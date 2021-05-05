@@ -3,14 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TourPlanner"
-        xmlns:designViewModel="clr-namespace:TourPlanner.DesignViewModel"
+        xmlns:viewModels="clr-namespace:TourPlanner.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}"
         mc:Ignorable="d"
-        Title="TourPlanner" Height="450" Width="800"
-        d:DataContext="{d:DesignInstance Type=designViewModel:DesignMainViewModel, IsDesignTimeCreatable=True}">
-    <Window.DataContext>
-        <local:MainViewModel />
-    </Window.DataContext>
+        Title="TourPlanner" Height="450" Width="800">
+
     <Grid>
         <!-- Initial Grid Layout -->
         <Grid.ColumnDefinitions>
@@ -34,21 +31,26 @@
             </Grid.ColumnDefinitions>
 
             <!-- Search box and button -->
-            <TextBox Grid.Column = "0" Grid.Row="0" VerticalContentAlignment="Center" Margin="2,2,0,2" MaxHeight="30"/>
-            <Button Grid.Column = "1" Grid.Row="0" Margin="0,2,2,2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="30">
+            <TextBox Grid.Column = "0" Grid.Row="0" VerticalContentAlignment="Center" Margin="2,2,0,2" MaxHeight="30" Text="{Binding SearchTourName, Mode=TwoWay}"/>
+            <Button Grid.Column = "1" Grid.Row="0" Margin="0,2,2,2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="30" Command="{Binding SearchCommand}">
                 <Image Source="/Images/Search_Icon.png" AutomationProperties.HelpText="Search ..."/>
             </Button>
 
             <!-- List of existing tours -->
-            <ListBox Grid.Column = "0" Grid.Row="1" Grid.ColumnSpan="2" Margin="2,2,2,2"/>
+            <ListBox Grid.Column = "0" Grid.Row="1" Grid.ColumnSpan="2" Margin="2,2,2,2"
+                     x:Name="ListTours"
+                     ItemsSource="{Binding Tours}"
+                     SelectedItem="{Binding CurrentTour}"
+                     DisplayMemberPath="Name"/>
         </Grid>
 
 
         <Grid Grid.Row="0" Grid.Column="1">
             <!-- Initial TourInput, TourInfo and Log Grid Layout -->
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="5*"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
 
@@ -59,50 +61,26 @@
 
             <!-- Tour input Grid Layout -->
             <Grid Grid.Row="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Tour name input -->
-                <StackPanel Grid.Row="0" Grid.Column="0">
-                    <Label Content="Tour name:" VerticalContentAlignment="Top"/>
-                    <TextBox Text="{Binding Name}" Margin="5,0,5,0"></TextBox>
-                </StackPanel>
+                <!-- Tours Label -->
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <Label Content="Tours:"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="0">
 
-                <!-- Tour description input -->
-                <StackPanel Grid.Row="0" Grid.Column="1">
-                    <Label Content="Description:" VerticalContentAlignment="Top"/>
-                    <TextBox Text="{Binding Description}" Margin="5,0,5,0"></TextBox>
-                </StackPanel>
-
-                <!-- Route Information input -->
-                <StackPanel Grid.Row="1" Grid.Column="0">
-                    <Label Content="Route Information:" VerticalContentAlignment="Top"/>
-                    <TextBox Text="{Binding RouteInformation}" Margin="5,0,5,0"></TextBox>
-                </StackPanel>
-
-                <!-- Route Information input -->
-                <StackPanel Grid.Row="1" Grid.Column="1">
-                    <Label Content="Distance:" VerticalContentAlignment="Top"/>
-                    <TextBox Text="{Binding Distance}" Margin="5,0,5,0"></TextBox>
-                </StackPanel>
-
-                <!-- Add/Remove Button Grid Layout -->
-                <Grid Grid.Row="1" Grid.Column="2">
+                    <!-- Log Add/Remove Button Grid Layout -->
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Add/Remove Button -->
-                    <Button Grid.Column = "0" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Add" Command="{Binding AddCommand}"/>
-                    <Button Grid.Column = "1" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Remove"/>
+                    <!-- Log Add/Remove Button -->
+                    <Button Grid.Column = "0" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Add" Command="{Binding AddLogCommand}"/>
+                    <Button Grid.Column = "1" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Remove" Command="{Binding RemoveLogCommand}"/>
                 </Grid>
             </Grid>
 
@@ -114,7 +92,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Tour Info Table -->
-                <DataGrid ItemsSource="{Binding Data}" 
+                <DataGrid ItemsSource="{Binding Tours}" 
                           AutoGenerateColumns="False" 
                           AlternatingRowBackground="LightGray"
                           CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
@@ -156,16 +134,11 @@
                 <Image Grid.Column="1" Source="/Images/No_Image_Icon.png" AutomationProperties.HelpText="Map Image"/>
             </Grid>
 
-            <!-- Log Grid Layout -->
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="4*"/>
-                </Grid.RowDefinitions>
 
                 <!-- Log Label -->
                 <Grid Grid.Column="0" Grid.Row="0">
@@ -180,22 +153,23 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Log Add/Remove Button -->
-                    <Button Grid.Column = "0" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Add"/>
-                    <Button Grid.Column = "1" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Remove"/>
+                    <Button Grid.Column = "0" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Add" Command="{Binding AddLogCommand}"/>
+                    <Button Grid.Column = "1" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Remove" Command="{Binding RemoveLogCommand}"/>
                 </Grid>
+            </Grid>
 
-                <!-- Log Information Table -->
-                <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-                    <DataGrid>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Date/Time" Width="2*"/>
-                            <DataGridTextColumn Header="Report" Width="3*"/>
-                            <DataGridTextColumn Header="Distance" Width="2*"/>
-                            <DataGridTextColumn Header="Total-time" Width="2*"/>
-                            <DataGridTextColumn Header="Rating" Width="1*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
+            <!-- Log Grid Layout -->
+            <Grid Grid.Row="3">
+               <!-- Log Information Table -->
+               <DataGrid>
+                   <DataGrid.Columns>
+                       <DataGridTextColumn Header="Date/Time" Width="2*"/>
+                       <DataGridTextColumn Header="Report" Width="3*"/>
+                       <DataGridTextColumn Header="Distance" Width="2*"/>
+                       <DataGridTextColumn Header="Total-time" Width="2*"/>
+                       <DataGridTextColumn Header="Rating" Width="1*"/>
+                   </DataGrid.Columns>
+               </DataGrid>
             </Grid>
         </Grid>
     </Grid>
