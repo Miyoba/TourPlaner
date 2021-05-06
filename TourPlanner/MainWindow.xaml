@@ -48,16 +48,15 @@
         <Grid Grid.Row="0" Grid.Column="1">
             <!-- Initial TourInput, TourInfo and Log Grid Layout -->
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="5*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
 
             <!-- Borders -->
-            <Border Grid.Row="0" BorderThickness="0.5" BorderBrush="Gray"/>
-            <Border Grid.Row="1" BorderThickness="0.5" BorderBrush="Gray"/>
-            <Border Grid.Row="2" BorderThickness="0.5" BorderBrush="Gray"/>
+            <Border Grid.Row="0" Grid.RowSpan ="2" Margin="0.5,0.5,0.5,0" BorderThickness="1" BorderBrush="Gray"/>
+            <Border Grid.Row="2" Grid.RowSpan ="2" Margin="0.5,3,0.5,0.5" BorderThickness="1" BorderBrush="Gray"/>
 
             <!-- Tour input Grid Layout -->
             <Grid Grid.Row="0">
@@ -79,8 +78,8 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Log Add/Remove Button -->
-                    <Button Grid.Column = "0" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Add" Command="{Binding AddLogCommand}"/>
-                    <Button Grid.Column = "1" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Remove" Command="{Binding RemoveLogCommand}"/>
+                    <Button Grid.Column = "0" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Add" Command="{Binding AddCommand}"/>
+                    <Button Grid.Column = "1" Margin="1,1,1,4" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxHeight="20" Content="Remove" Command="{Binding RemoveCommand}"/>
                 </Grid>
             </Grid>
 
@@ -92,7 +91,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Tour Info Table -->
-                <DataGrid ItemsSource="{Binding Tours}" 
+                <DataGrid Margin="2,0,2,2" ItemsSource="{Binding Tours}" 
                           AutoGenerateColumns="False" 
                           AlternatingRowBackground="LightGray"
                           CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
@@ -142,7 +141,7 @@
 
                 <!-- Log Label -->
                 <Grid Grid.Column="0" Grid.Row="0">
-                    <Label Content="Logs:"/>
+                    <Label Margin="0,10,0,0" Content="Logs:"/>
                 </Grid>
                 <Grid Grid.Column="1" Grid.Row="0">
 
@@ -161,7 +160,7 @@
             <!-- Log Grid Layout -->
             <Grid Grid.Row="3">
                <!-- Log Information Table -->
-               <DataGrid>
+               <DataGrid Margin="2,0,2,2">
                    <DataGrid.Columns>
                        <DataGridTextColumn Header="Date/Time" Width="2*"/>
                        <DataGridTextColumn Header="Report" Width="3*"/>

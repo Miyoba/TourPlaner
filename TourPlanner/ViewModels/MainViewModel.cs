@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
 using TourPlanner.Models;
@@ -18,7 +19,7 @@ namespace TourPlanner.ViewModels
         private ICommand _removeCommand;
         private ICommand _addLogCommand;
         private ICommand _removeLogCommand;
-        
+
 
 
         public ICommand SearchCommand => _searchCommand ??= new RelayCommand(Search);
@@ -26,6 +27,7 @@ namespace TourPlanner.ViewModels
         public ICommand RemoveCommand => _removeCommand ??= new RelayCommand(Remove);
         public ICommand AddLogCommand => _addLogCommand ??= new RelayCommand(AddLog);
         public ICommand RemoveLogCommand => _removeLogCommand ??= new RelayCommand(RemoveLog);
+
         public ObservableCollection<Tour> Tours { get; set; }
 
         public Tour CurrentTour
@@ -45,7 +47,7 @@ namespace TourPlanner.ViewModels
             set{
                 if (_searchTourName != value) {
                     _searchTourName = value;
-                    RaisePropertyChangedEvent(nameof(CurrentTour));
+                    RaisePropertyChangedEvent(nameof(SearchTourName));
                 }
             }
         }
@@ -81,7 +83,10 @@ namespace TourPlanner.ViewModels
         }
         private void Add(object commandParameter)
         {
-            throw new System.NotImplementedException();
+            SearchTourName = "";
+            Search(null);
+            AddTourWindow addTourWindow = new AddTourWindow();
+            addTourWindow.Show();
         }
         private void Remove(object commandParameter)
         {
