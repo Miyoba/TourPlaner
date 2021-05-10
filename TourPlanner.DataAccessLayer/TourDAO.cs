@@ -16,8 +16,13 @@ namespace TourPlanner.DataAccessLayer
             _dataAccess = new Database();
         }
 
-        public List<Tour> GetItems() {
+        public List<Tour> GetTours() {
             return _dataAccess.GetTours();
+        }
+
+        public List<TourLog> GetTourLogs(Tour tour)
+        {
+            return _dataAccess.GetTourLogs(tour);
         }
     }
 }

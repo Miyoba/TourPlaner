@@ -1,11 +1,13 @@
-﻿<Window x:Class="TourPlanner.AddTourWindow"
+﻿<Window x:Class="TourPlanner.Windows.EditTourWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TourPlanner"
+        xmlns:viewModels="clr-namespace:TourPlanner.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewModels:EditTourViewModel}"
         mc:Ignorable="d"
-        Title="AddTourWindow" Height="Auto" Width="300" SizeToContent="Height">
+        Title="EditTourWindow" Height="Auto" Width="300" SizeToContent="WidthAndHeight">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -22,15 +24,20 @@
         <Border Grid.Row="4" BorderThickness="0.5" BorderBrush="Gray"/>
 
         <Grid Row="0">
-            <Label FontSize="30" FontWeight="Medium" HorizontalAlignment="Center">Add a new Tour</Label>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" FontSize="30" FontWeight="Medium" HorizontalAlignment="Center" Content="Edit Tour: "/>
+            <Label Grid.Column="1" FontSize="30" FontWeight="Medium" HorizontalAlignment="Center" Content="{Binding TourName, Mode=OneTime}"/>
         </Grid>
         <Grid Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Margin="0,5,0,0">TourName:</Label>
-            <TextBox Grid.Row="1" Margin="5,0,5,10"></TextBox>
+            <Label Grid.Row="0" Margin="0,5,0,0" Content="TourName:"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding TourName, Mode=TwoWay}"/>
         </Grid>
 
         <Grid Row="2">
@@ -38,8 +45,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Margin="0,5,0,0">Description:</Label>
-            <TextBox Grid.Row="1" Margin="5,0,5,10"></TextBox>
+            <Label Grid.Row="0" Margin="0,5,0,0" Content="Description:"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding TourDescription, Mode=TwoWay}"/>
         </Grid>
 
         <Grid Row="3">
@@ -47,8 +54,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Margin="0,5,0,0">Route information:</Label>
-            <TextBox Grid.Row="1" Margin="5,0,5,10"></TextBox>
+            <Label Grid.Row="0" Margin="0,5,0,0" Content="Route information:"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding TourRouteInformation, Mode=TwoWay}"/>
         </Grid>
 
         <Grid Row="4">
@@ -56,14 +63,14 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Margin="0,5,0,0">Distance:</Label>
-            <TextBox Grid.Row="1" Margin="5,0,5,10"></TextBox>
+            <Label Grid.Row="0" Margin="0,5,0,0" Content="Distance:"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding TourDistance, Mode=TwoWay}"/>
         </Grid>
 
         <Grid Row="5">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Margin="5px" Padding="2px">Add</Button>
-                <Button Margin="5px" Padding="2px">Cancel</Button>
+                <Button Margin="5px" Padding="2px" MaxHeight="20" Content="Edit" Command="{Binding EditTourCommand}"/>
+                <Button Margin="5px" Padding="2px" MaxHeight="20" Content="Cancel" Command="{Binding CancelTourCommand}"/>
             </StackPanel>
             
         </Grid>

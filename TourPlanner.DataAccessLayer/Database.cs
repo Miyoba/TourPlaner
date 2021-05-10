@@ -26,5 +26,15 @@ namespace TourPlanner.DataAccessLayer
                 new Tour() {Name = "Berlin"}
             };
         }
+
+        public List<TourLog> GetTourLogs(Tour tour)
+        {
+            return new List<TourLog>()
+            {
+                new TourLog() {Rating = "Super"},
+                new TourLog() {Rating = "Schlecht"},
+                new TourLog() {Rating = "Naja"}
+            };
+        }
     }
 }
