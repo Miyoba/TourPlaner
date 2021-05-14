@@ -4,6 +4,6 @@
         public string Report { get; set; }
         public int Distance { get; set; }
         public string TotalTime { get; set; }
-        public string Rating { get; set; }
+        public int Rating { get; set; }
     }
 }

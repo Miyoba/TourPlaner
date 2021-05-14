@@ -56,7 +56,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Margin="0,5,0,0" Content="Distance:"/>
-            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding Distance, Mode=TwoWay}"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding Distance, Mode=TwoWay}" PreviewTextInput="NumbersOnly"/>
         </Grid>
 
         <Grid Row="4">
@@ -74,7 +74,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Margin="0,5,0,0" Content="Rating:"/>
-            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding Rating, Mode=TwoWay}"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding Rating, Mode=TwoWay}" PreviewTextInput="NumbersOnly"/>
         </Grid>
 
         <Grid Row="6">

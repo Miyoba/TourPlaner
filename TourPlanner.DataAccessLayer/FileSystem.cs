@@ -30,9 +30,9 @@ namespace TourPlanner.DataAccessLayer
         {
             return new List<TourLog>()
             {
-                new TourLog() {Rating = "Super"},
-                new TourLog() {Rating = "Schlecht"},
-                new TourLog() {Rating = "Naja"}
+                new TourLog() {Rating = 1},
+                new TourLog() {Rating = 5},
+                new TourLog() {Rating = 3}
             };
         }
     }

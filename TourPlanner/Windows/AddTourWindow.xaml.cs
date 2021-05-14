@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Input;
 using TourPlanner.ViewModels;
 
 namespace TourPlanner.Windows {
@@ -10,6 +12,12 @@ namespace TourPlanner.Windows {
         {
             InitializeComponent();
             this.DataContext = new AddTourViewModel(this);
+        }
+
+        private void NumbersOnly(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

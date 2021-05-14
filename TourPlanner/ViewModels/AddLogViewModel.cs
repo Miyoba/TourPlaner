@@ -15,7 +15,7 @@ namespace TourPlanner.ViewModels {
         private string _report;
         private int _distance;
         private string _totalTime;
-        private string _rating;
+        private int _rating;
 
         private ICommand _addLogCommand;
         private ICommand _cancelLogCommand;
@@ -77,7 +77,7 @@ namespace TourPlanner.ViewModels {
                 }
             }
         }
-        public String Rating
+        public int Rating
         {
             get => _rating;
             set{
