@@ -19,6 +19,18 @@ namespace TourPlanner.BusinessLayer
             return _tourDAO.GetTourLogs(tour);
         }
 
+        public IEnumerable<Tour> FindTour(IEnumerable<Tour> tours, IEnumerable<Tour> found, string fieldName, string searchArg, bool caseSensitive = false)
+        {
+            searchArg = caseSensitive ? searchArg : searchArg.ToLower();
+            return found.Concat(tours.Where(x => x.GetFieldValue(fieldName, caseSensitive).Contains(searchArg)));
+        }
+
+        public IEnumerable<TourLog> FindTourLog(IEnumerable<TourLog> tourLogs, IEnumerable<TourLog> found, string fieldName, string searchArg, bool caseSensitive = false)
+        {
+            searchArg = caseSensitive ? searchArg : searchArg.ToLower();
+            return found.Concat(tourLogs.Where(x => x.GetFieldValue(fieldName, caseSensitive).Contains(searchArg)));
+        }
+
         public IEnumerable<Tour> Search(string searchArg, bool caseSensitive = false) {
             IEnumerable<Tour> tours = GetTours();
             IEnumerable<Tour> found = new List<Tour>();
@@ -33,18 +45,6 @@ namespace TourPlanner.BusinessLayer
 
             return found.Distinct();
 
-        }
-
-        public IEnumerable<Tour> FindTour(IEnumerable<Tour> tours, IEnumerable<Tour> found, string fieldName, string searchArg, bool caseSensitive = false)
-        {
-            searchArg = caseSensitive ? searchArg : searchArg.ToLower();
-            return found.Concat(tours.Where(x => x.GetFieldValue(fieldName, caseSensitive).Contains(searchArg)));
-        }
-
-        public IEnumerable<TourLog> FindTourLog(IEnumerable<TourLog> tourLogs, IEnumerable<TourLog> found, string fieldName, string searchArg, bool caseSensitive = false)
-        {
-            searchArg = caseSensitive ? searchArg : searchArg.ToLower();
-            return found.Concat(tourLogs.Where(x => x.GetFieldValue(fieldName, caseSensitive).Contains(searchArg)));
         }
 
         public IEnumerable<TourLog> SearchTourLog(Tour tour, string searchArg, bool caseSensitive = false)
