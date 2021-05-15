@@ -19,11 +19,11 @@ namespace TourPlanner.DataAccessLayer
         {
             return new List<Tour>()
             {
-                new Tour() {Name = "TestTour"},
-                new Tour() {Name = "TestTour2"},
-                new Tour() {Name = "Wien"},
-                new Tour() {Name = "Paris"},
-                new Tour() {Name = "Berlin"}
+                new Tour() {Name = "TestTour", RouteInformation = "Route1", Distance = 33, Description = "Fun"},
+                new Tour() {Name = "TestTour2", RouteInformation = "Route2", Distance = 98789, Description = "Really Long"},
+                new Tour() {Name = "Wien", RouteInformation = "Wien - Paris", Distance = 5000, Description = "Le Baguette"},
+                new Tour() {Name = "Paris", RouteInformation = "Paris - Berlin", Distance = 1524, Description = "Weiswurst"},
+                new Tour() {Name = "Berlin", RouteInformation = "Berlin - Hamburg", Distance = 382, Description = "Kurz"}
             };
         }
 

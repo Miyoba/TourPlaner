@@ -130,7 +130,12 @@ namespace TourPlanner.ViewModels
 
         private void SearchLog(object commandParameter)
         {
-            throw new System.NotImplementedException();
+            IEnumerable foundTourLogs = this._tourFactory.SearchTourLog(CurrentTour, SearchLogValue);
+            Logs.Clear();
+            foreach (TourLog tourLog in foundTourLogs)
+            {
+                Logs.Add(tourLog);
+            }
         }
         private void Add(object commandParameter)
         {
