@@ -22,14 +22,14 @@
         <!-- Borders -->
         <Border Grid.Row="1" Grid.RowSpan ="2" Margin="0.5,0.5,0.5,0" BorderThickness="1" BorderBrush="Gray"/>
         <Border Grid.Row="3" Grid.RowSpan ="2" Margin="0.5,3,0.5,0.5" BorderThickness="1" BorderBrush="Gray"/>
-
-        <ToolBarTray Grid.Row="0" IsLocked="True">
-            <ToolBar>
-                <Button Content="Import" Padding="5,0,5,0" Command="{Binding ImportDataCommand}"/>
-                <Button Content="Export" Padding="5,0,5,0" Command="{Binding ExportDataCommand}"/>
-                <Button Content="Print" Padding="5,0,5,0" Command="{Binding PrintDataCommand}"/>
-            </ToolBar>
-        </ToolBarTray>
+        
+        <Menu Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="Import" Command="{Binding ImportDataCommand}"/>
+                <MenuItem Header="Export" Command="{Binding ExportDataCommand}"/>
+                <MenuItem Header="Print" Command="{Binding PrintDataCommand}"/>
+            </MenuItem>
+        </Menu>
 
         <!-- Tour input Grid Layout -->
         <Grid Grid.Row="1">
@@ -42,13 +42,14 @@
             <Grid Grid.Column="0" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="867*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column = "0" Margin="0,10,0,0" Content="Tours:"/>
-                <TextBox Grid.Column = "1" VerticalContentAlignment="Center" VerticalAlignment="Bottom" Height="20" Margin="2,10,0,2" Text="{Binding SearchTourName, Mode=TwoWay}"/>
-                <Button Grid.Column = "2" VerticalAlignment="Bottom" Margin="0,2,2,2"  MinWidth="30" MaxWidth="100" HorizontalAlignment="Left" Height="20" Command="{Binding SearchCommand}">
+                <Label Grid.Column = "0" Margin="0,10,20,0" Content="Tours:" Grid.ColumnSpan="2"/>
+                <TextBox Grid.Column = "1" VerticalContentAlignment="Center" VerticalAlignment="Bottom" Height="20" Margin="2,0,0,2" Text="{Binding SearchTourName, Mode=TwoWay}" Grid.ColumnSpan="2"/>
+                <Button Grid.Column = "3" VerticalAlignment="Bottom" Margin="0,0,0,2"  MinWidth="30" MaxWidth="100" HorizontalAlignment="Left" Height="20" Command="{Binding SearchCommand}">
                     <Image Source="/Images/Search_Icon.png" AutomationProperties.HelpText="Search ..."/>
                 </Button>
             </Grid>
