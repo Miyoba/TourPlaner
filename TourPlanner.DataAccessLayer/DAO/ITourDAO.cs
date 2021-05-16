@@ -6,6 +6,8 @@ namespace TourPlanner.DataAccessLayer.DAO {
     {
         Tour FindById(int tourId);
         Tour AddNewTour(string tourName, string tourFromLocation, string tourToLocation, string tourDescription, int tourDistance);
+        void DeleteTour(Tour tour);
+        Tour EditTour(Tour tour, string tourName, string tourFromLocation, string tourToLocation, string tourDescription, int tourDistance);
         IEnumerable<Tour> GetTours();
     }
 }

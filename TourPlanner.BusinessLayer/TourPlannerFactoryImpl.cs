@@ -76,5 +76,26 @@ namespace TourPlanner.BusinessLayer
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
             return tourLogDao.AddNewTourLog(tour, dateTime, report, distance, totalTime, rating);
         }
+
+        public void DeleteTour(Tour tour)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DeleteTourLog(TourLog tourLog)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Tour EditTour(Tour tour, string tourName, string tourDescription, string tourFromLocation, string tourToLocation,
+            int tourDistance)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

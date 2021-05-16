@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TourPlanner.DataAccessLayer.Common;
 using TourPlanner.DataAccessLayer.DAO;
 using TourPlanner.Models;
@@ -50,6 +48,17 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             _database.DefineParameter(insertCommand, "@Distance", DbType.Int32, tourDistance);
 
             return FindById(_database.ExecuteScalar(insertCommand));
+        }
+
+        public void DeleteTour(Tour tour)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Tour EditTour(Tour tour, string tourName, string tourFromLocation, string tourToLocation, string tourDescription,
+            int tourDistance)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Tour> GetTours()

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -51,6 +50,16 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             _database.DefineParameter(insertCommand, "@Rating", DbType.Int32, rating);
 
             return FindById(_database.ExecuteScalar(insertCommand));
+        }
+
+        public void DeleteTourLog(TourLog tourLog)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating)
+        {
+            throw new System.NotImplementedException();
         }
 
         public IEnumerable<TourLog> GetTourLogs(Tour tour)
