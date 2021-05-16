@@ -10,7 +10,7 @@ namespace TourPlanner.ViewModels
 {
     class MainViewModel: ViewModelBase
     {
-        private ITourFactory _tourFactory;
+        private ITourPlannerFactory _tourPlannerFactory;
         private Tour _currentTour;
         private TourLog _currentLog;
 
@@ -56,7 +56,7 @@ namespace TourPlanner.ViewModels
                     RaisePropertyChangedEvent(nameof(CurrentTour));
 
                     Logs.Clear();
-                    foreach (var log in this._tourFactory.GetTourLogs(_currentTour))
+                    foreach (var log in this._tourPlannerFactory.GetTourLogs(_currentTour))
                     {
                         Logs.Add(log);
                     }
@@ -99,7 +99,7 @@ namespace TourPlanner.ViewModels
 
         public MainViewModel()
         {
-            this._tourFactory = TourFactory.GetInstance();
+            this._tourPlannerFactory = TourPlannerFactory.GetInstance();
             InitListBox();
         }
 
@@ -112,7 +112,7 @@ namespace TourPlanner.ViewModels
 
         private void FillListBox()
         {
-            foreach (var tour in this._tourFactory.GetTours())
+            foreach (var tour in this._tourPlannerFactory.GetTours())
             {
                 Tours.Add(tour);
             }
@@ -120,7 +120,7 @@ namespace TourPlanner.ViewModels
 
         private void Search(object commandParameter)
         {
-            IEnumerable foundTours = this._tourFactory.Search(SearchTourName);
+            IEnumerable foundTours = this._tourPlannerFactory.Search(SearchTourName);
             Tours.Clear();
             foreach (Tour tour in foundTours)
             {
@@ -130,7 +130,7 @@ namespace TourPlanner.ViewModels
 
         private void SearchLog(object commandParameter)
         {
-            IEnumerable foundTourLogs = this._tourFactory.SearchTourLog(CurrentTour, SearchLogValue);
+            IEnumerable foundTourLogs = this._tourPlannerFactory.SearchTourLog(CurrentTour, SearchLogValue);
             Logs.Clear();
             foreach (TourLog tourLog in foundTourLogs)
             {

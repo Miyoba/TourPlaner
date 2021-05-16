@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Border Grid.Row="1" BorderThickness="0.5" BorderBrush="Gray"/>
@@ -40,8 +41,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Margin="0,5,0,0" Content="Description:"/>
-            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding TourDescription, Mode=OneWayToSource}"/>
+            <Label Grid.Row="0" Margin="0,5,0,0" Content="From:"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding TourFromLocation, Mode=OneWayToSource}"/>
         </Grid>
 
         <Grid Row="3">
@@ -49,11 +50,20 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Margin="0,5,0,0" Content="Route information:"/>
-            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding TourRouteInformation, Mode=OneWayToSource}"/>
+            <Label Grid.Row="0" Margin="0,5,0,0" Content="To:"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding TourToLocation, Mode=OneWayToSource}"/>
         </Grid>
 
         <Grid Row="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Margin="0,5,0,0" Content="Description:"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding TourDescription, Mode=OneWayToSource}"/>
+        </Grid>
+
+        <Grid Row="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -62,7 +72,7 @@
             <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding TourDistance, Mode=OneWayToSource, FallbackValue=0}" PreviewTextInput="NumbersOnly"/>
         </Grid>
 
-        <Grid Row="5">
+        <Grid Row="6">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Margin="5px" Padding="2px" MaxHeight="20" Content="Add" Command="{Binding AddTourCommand}"/>
                 <Button Margin="5px" Padding="2px" MaxHeight="20" Content="Cancel" Command="{Binding CancelTourCommand}"/>

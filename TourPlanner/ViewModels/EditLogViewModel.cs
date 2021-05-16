@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using TourPlanner.BusinessLayer;
 using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels {
@@ -8,7 +9,10 @@ namespace TourPlanner.ViewModels {
     {
 
         private Window _window;
+        private ITourPlannerFactory _tourPlannerFactory;
 
+        private Tour _tour;
+        
         private string _tourName;
 
         private string _dateTime;
@@ -91,12 +95,15 @@ namespace TourPlanner.ViewModels {
         public EditLogViewModel(Window window, Tour tour, TourLog log)
         {
             _window = window;
+            _tour = tour;
             _tourName = tour.Name;
             _dateTime = log.DateTime;
             _report = log.Report;
             _distance = log.Distance;
             _totalTime = log.TotalTime;
             _rating = log.Rating;
+
+            this._tourPlannerFactory = TourPlannerFactory.GetInstance();
         }
 
         private void EditLog(object commandParameter)

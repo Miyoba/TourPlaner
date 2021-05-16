@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using TourPlanner.BusinessLayer;
 using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels {
@@ -8,6 +9,9 @@ namespace TourPlanner.ViewModels {
     {
 
         private Window _window;
+        private ITourPlannerFactory _tourPlannerFactory;
+
+        private Tour _tour;
 
         private string _tourName;
 
@@ -92,11 +96,13 @@ namespace TourPlanner.ViewModels {
         {
             _window = window;
             _tourName = tour.Name;
+            _tour = tour;
+            this._tourPlannerFactory = TourPlannerFactory.GetInstance();
         }
 
         private void AddLog(object commandParameter)
         {
-            //TODO Add Tour Information to DAO
+            _tourPlannerFactory.AddTourLog(_tour, _dateTime, _report, _distance, _totalTime, _rating);
             _window.Close();
         }
 

@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using TourPlanner.DataAccessLayer;
+using TourPlanner.DataAccessLayer.Common;
+using TourPlanner.DataAccessLayer.DAO;
 using TourPlanner.Models;
 
 namespace TourPlanner.BusinessLayer
 {
-    internal class TourFactoryImpl : ITourFactory
+    internal class TourPlannerFactoryImpl : ITourPlannerFactory
     {
-        private TourDAO _tourDAO = new TourDAO();
         public IEnumerable<Tour> GetTours()
         {
-            return _tourDAO.GetTours();
+            ITourDAO tourDAO = DALFactory.CreateTourDAO();
+            return tourDAO.GetTours();
         }
 
         public IEnumerable<TourLog> GetTourLogs(Tour tour)
         {
-            return _tourDAO.GetTourLogs(tour);
+            ITourLogDAO tourLogDAO = DALFactory.CreateTourLogDAO();
+            return tourLogDAO.GetTourLogs(tour);
         }
 
         public IEnumerable<Tour> FindTour(IEnumerable<Tour> tours, IEnumerable<Tour> found, string fieldName, string searchArg, bool caseSensitive = false)
@@ -38,7 +39,8 @@ namespace TourPlanner.BusinessLayer
             if (searchArg != null)
             {
                 found = FindTour(tours, found, "Name", searchArg, caseSensitive);
-                found = FindTour(tours, found, "RouteInformation", searchArg, caseSensitive);
+                found = FindTour(tours, found, "FromLocation", searchArg, caseSensitive);
+                found = FindTour(tours, found, "ToLocation", searchArg, caseSensitive);
                 found = FindTour(tours, found, "Description", searchArg, caseSensitive);
                 found = FindTour(tours, found, "Distance", searchArg, caseSensitive);
             }
@@ -63,9 +65,16 @@ namespace TourPlanner.BusinessLayer
             return found.Distinct();
             }
 
-        public bool AddTour(string tourName, string tourDescription, string tourRouteInformation, int tourDistance)
+        public Tour AddTour(string tourName, string tourDescription, string tourFromLocation, string tourToLocation, int tourDistance)
         {
-            throw new System.NotImplementedException();
+            ITourDAO tourDao = DALFactory.CreateTourDAO();
+            return tourDao.AddNewTour(tourName, tourFromLocation, tourToLocation, tourDescription, tourDistance);
+        }
+
+        public TourLog AddTourLog(Tour tour, string dateTime, string report, int distance, string totalTime, int rating)
+        {
+            ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
+            return tourLogDao.AddNewTourLog(tour, dateTime, report, distance, totalTime, rating);
         }
     }
 }
