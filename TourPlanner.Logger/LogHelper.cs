@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.CompilerServices;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
