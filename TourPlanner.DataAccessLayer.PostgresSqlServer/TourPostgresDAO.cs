@@ -17,7 +17,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
 
         private const string SqlEditTour = "UPDATE public.\"Tour\" SET " +
                                            "\"ToLocation\"=@ToLocation, \"Name\"=@Name, \"FromLocation\"=@FromLocation, " +
-                                           "\"Description\"=@Descripton, \"Distance\"=@Distance " +
+                                           "\"Description\"=@Description, \"Distance\"=@Distance " +
                                            "WHERE \"Id\"=@Id RETURNING \"Id\";";
 
         private const string SqlInsertNewTour = "INSERT INTO public.\"Tour\" (\"Name\",\"FromLocation\",\"ToLocation\",\"Description\",\"Distance\") " +

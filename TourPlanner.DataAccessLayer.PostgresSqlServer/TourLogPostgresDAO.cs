@@ -73,6 +73,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             _database.DefineParameter(editCommand, "@Distance", DbType.Int32, distance);
             _database.DefineParameter(editCommand, "@TotalTime", DbType.String, totalTime);
             _database.DefineParameter(editCommand, "@Rating", DbType.Int32, rating);
+            _database.DefineParameter(editCommand, "@Id", DbType.Int32, tourLog.Id);
 
             _database.ExecuteScalar(editCommand);
         }
