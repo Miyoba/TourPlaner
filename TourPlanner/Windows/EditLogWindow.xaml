@@ -79,7 +79,7 @@
 
         <Grid Row="6">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Margin="5px" Padding="2px" MaxHeight="20" Content="Add" Command="{Binding EditLogCommand}"/>
+                <Button Margin="5px" Padding="2px" MaxHeight="20" Content="Edit" Command="{Binding EditLogCommand}"/>
                 <Button Margin="5px" Padding="2px" MaxHeight="20" Content="Cancel" Command="{Binding CancelLogCommand}"/>
             </StackPanel>
             

@@ -2,16 +2,18 @@
 using System.Windows;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
+using TourPlanner.Logger;
 using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels {
     class EditLogViewModel : ViewModelBase
     {
+        private static readonly log4net.ILog _log = LogHelper.GetLogger();
 
         private Window _window;
         private ITourPlannerFactory _tourPlannerFactory;
 
-        private Tour _tour;
+        private TourLog _tourLog;
         
         private string _tourName;
 
@@ -94,8 +96,9 @@ namespace TourPlanner.ViewModels {
 
         public EditLogViewModel(Window window, Tour tour, TourLog log)
         {
+            _log.Debug("Initializing Edit Log Window.");
             _window = window;
-            _tour = tour;
+            _tourLog = log;
             _tourName = tour.Name;
             _dateTime = log.DateTime;
             _report = log.Report;
@@ -108,12 +111,14 @@ namespace TourPlanner.ViewModels {
 
         private void EditLog(object commandParameter)
         {
-            //TODO Add Tour Information to DAO
+            _log.Info("Edit Log function is going to be executed.");
+            _tourPlannerFactory.EditTourLog(_tourLog, DateTime, Report, Distance, TotalTime, Rating);
             _window.Close();
         }
 
         private void CancelLog(object commandParameter)
         {
+            _log.Info("Edit Log process was canceled.");
             _window.Close();
         }
     }

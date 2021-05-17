@@ -13,6 +13,8 @@ namespace TourPlanner.ViewModels {
         private Window _window;
         private ITourPlannerFactory _tourPlannerFactory;
 
+        private Tour _tour;
+
         private string _tourName;
         private string _tourDescription;
         private string _tourFromLocation;
@@ -83,7 +85,9 @@ namespace TourPlanner.ViewModels {
 
         public EditTourViewModel(Window window, Tour tour)
         {
+            _log.Debug("Initializing Edit Tour Window.");
             _window = window;
+            _tour = tour;
             _tourName = tour.Name;
             _tourDescription = tour.Description;
             _tourFromLocation = tour.FromLocation;
@@ -95,12 +99,15 @@ namespace TourPlanner.ViewModels {
 
         private void EditTour(object commandParameter)
         {
-            //TODO Edit Tour Information to DAO
+            _log.Info("Edit Tour function is going to be executed.");
+            _tourPlannerFactory.EditTour(_tour, TourName, TourDescription, TourFromLocation, TourToLocation,
+                TourDistance);
             _window.Close();
         }
 
         private void CancelTour(object commandParameter)
         {
+            _log.Info("Edit Tour process was canceled.");
             _window.Close();
         }
     }

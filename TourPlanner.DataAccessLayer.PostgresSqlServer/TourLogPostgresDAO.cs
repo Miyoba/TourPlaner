@@ -12,6 +12,10 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
         private const string SqlFindById = "SELECT * FROM public.\"TourLog\" WHERE \"Id\"=@Id;";
         private const string SqlFindByTour = "SELECT * FROM public.\"TourLog\" WHERE \"TourId\"=@TourId;";
         private const string SqlDeleteTourLog = "DELETE FROM public.\"TourLog\" WHERE \"Id\"=@Id;";
+        private const string SqlEditTourLog = "UPDATE public.\"TourLog\" SET " +
+                                              "\"DateTime\"=@DateTime, \"Report\"=@Report, \"Distance\"=@Distance, " +
+                                              "\"TotalTime\"=@TotalTime, \"Rating\"=@Rating " +
+                                              "WHERE \"Id\"=@Id RETURNING \"Id\";";
         private const string SqlInsertNewTourLog = "INSERT INTO public.\"TourLog\" (\"TourId\",\"DateTime\",\"Report\",\"Distance\",\"TotalTime\", \"Rating\") " +
                                                    "VALUES (@TourId, @DateTime, @Report, @Distance, @TotalTime, @Rating) " +
                                                    "RETURNING \"Id\";";
@@ -40,7 +44,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             return logs.FirstOrDefault();
         }
 
-        public TourLog AddNewTourLog(Tour tour, string dateTime, string report, int distance, string totalTime, int rating)
+        public void AddNewTourLog(Tour tour, string dateTime, string report, int distance, string totalTime, int rating)
         {
             DbCommand insertCommand = _database.CreateCommand(SqlInsertNewTourLog);
             _database.DefineParameter(insertCommand, "@TourId", DbType.Int32, tour.Id);
@@ -50,7 +54,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             _database.DefineParameter(insertCommand, "@TotalTime", DbType.String, totalTime);
             _database.DefineParameter(insertCommand, "@Rating", DbType.Int32, rating);
 
-            return FindById(_database.ExecuteScalar(insertCommand));
+            _database.ExecuteScalar(insertCommand);
         }
 
         public void DeleteTourLog(TourLog tourLog)
@@ -61,9 +65,16 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             _database.ExecuteScalar(deleteCommand);
         }
 
-        public TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating)
+        public void EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating)
         {
-            throw new System.NotImplementedException();
+            DbCommand editCommand = _database.CreateCommand(SqlEditTourLog);
+            _database.DefineParameter(editCommand, "@DateTime", DbType.String, dateTime);
+            _database.DefineParameter(editCommand, "@Report", DbType.String, report);
+            _database.DefineParameter(editCommand, "@Distance", DbType.Int32, distance);
+            _database.DefineParameter(editCommand, "@TotalTime", DbType.String, totalTime);
+            _database.DefineParameter(editCommand, "@Rating", DbType.Int32, rating);
+
+            _database.ExecuteScalar(editCommand);
         }
 
         public IEnumerable<TourLog> GetTourLogs(Tour tour)
