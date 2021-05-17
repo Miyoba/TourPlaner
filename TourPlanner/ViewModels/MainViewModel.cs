@@ -53,18 +53,14 @@ namespace TourPlanner.ViewModels {
             get => _currentTour;
             set
             {
-                if (_currentTour != value && value != null) {
+                if (_currentTour != value) {
                     _currentTour = value;
                     RaisePropertyChangedEvent(nameof(CurrentTour));
 
-                    Logs.Clear();
-                    foreach (var log in this._tourPlannerFactory.GetTourLogs(_currentTour))
-                    {
-                        Logs.Add(log);
-                    }
+                   FillTourLogListBox(_currentTour);
                 }
                 else
-                    _log.Debug("Selected Tour did not change or was null");
+                    _log.Debug("Selected Tour did not change");
             }
         }
 
@@ -73,19 +69,24 @@ namespace TourPlanner.ViewModels {
             get => _currentLog;
             set
             {
-                if (_currentLog != value && value != null)
+                if (_currentLog != value)
                 {
                     _currentLog = value;
                     RaisePropertyChangedEvent(nameof(CurrentLog));
                 }
                 else
-                    _log.Debug("Selected Log did not change or was null");
+                    _log.Debug("Selected Log did not change");
             }
         }
 
         public String SearchTourName
         {
-            get => _searchTourName;
+            get
+            {
+                if (_searchTourName == null)
+                    return "";
+                return _searchTourName;
+            }
             set
             {
                 if (_searchTourName != value)
@@ -98,7 +99,12 @@ namespace TourPlanner.ViewModels {
 
         public String SearchLogValue
         {
-            get => _searchLogValue;
+            get
+            {
+                if (_searchLogValue == null)
+                    return "";
+                return _searchLogValue;
+            }
             set
             {
                 if (_searchLogValue != value)
@@ -121,16 +127,33 @@ namespace TourPlanner.ViewModels {
             _log.Debug("Declaring Tour and Log Collections.");
             Tours = new ObservableCollection<Tour>();
             Logs = new ObservableCollection<TourLog>();
-            FillListBox();
+            FillTourListBox();
         }
 
-        private void FillListBox()
+        private void FillTourListBox()
         {
-            _log.Debug("Initializing Tour and Log Collections.");
+            _log.Debug("Filling Tour Collections.");
+            Tours.Clear();
             foreach (var tour in this._tourPlannerFactory.GetTours())
             {
                 Tours.Add(tour);
             }
+        }
+
+        private void FillTourLogListBox(Tour tour)
+        {
+            _log.Debug("Filling Log Collections.");
+            if (tour != null)
+            {
+                Logs.Clear();
+                foreach (var log in this._tourPlannerFactory.GetTourLogs(tour))
+                {
+                    Logs.Add(log);
+                }
+            }
+            else
+                _log.Debug("Can't fill Logs. No Tour was selected.");
+
         }
 
         private void Search(object commandParameter)
@@ -147,17 +170,22 @@ namespace TourPlanner.ViewModels {
         private void SearchLog(object commandParameter)
         {
             _log.Info("Search Log function was called.");
-            IEnumerable foundTourLogs = this._tourPlannerFactory.SearchTourLog(CurrentTour, SearchLogValue);
-            Logs.Clear();
-            foreach (TourLog tourLog in foundTourLogs)
+            if (CurrentTour != null)
             {
-                Logs.Add(tourLog);
+                IEnumerable foundTourLogs = this._tourPlannerFactory.SearchTourLog(CurrentTour, SearchLogValue);
+                Logs.Clear();
+                foreach (TourLog tourLog in foundTourLogs)
+                {
+                    Logs.Add(tourLog);
+                }
             }
+            else
+                _log.Debug("Can't search Logs. No Tour was selected.");
         }
         private void Add(object commandParameter)
         {
             _log.Info("Add Tour function was called.");
-            SearchTourName = "";
+            SearchTourName = null;
             Search(null);
             AddTourWindow addTourWindow = new AddTourWindow();
             addTourWindow.Show();
@@ -165,53 +193,62 @@ namespace TourPlanner.ViewModels {
         private void Edit(object commandParameter)
         {
             _log.Info("Edit Tour function was called.");
-            if (_currentTour != null)
+            if (CurrentTour != null)
             {
-                EditTourWindow editTourWindow = new EditTourWindow(_currentTour);
+                EditTourWindow editTourWindow = new EditTourWindow(CurrentTour);
                 editTourWindow.Show();
             }
             else
-            {
                 _log.Debug("Can't edit Tour. No Tour was selected.");
-            }
         }
         private void Remove(object commandParameter)
         {
             _log.Info("Remove Tour function was called.");
-            throw new System.NotImplementedException();
+            if (CurrentTour != null)
+            {
+                _tourPlannerFactory.DeleteTour(CurrentTour);
+                CurrentTour = null;
+                Logs.Clear();
+                FillTourListBox();
+            }
+            else
+                _log.Debug("Can't remove Tour. No Tour was selected.");
         }
         private void AddLog(object commandParameter)
         {
             _log.Info("Add Log function was called.");
-            if (_currentTour != null)
+            if (CurrentTour != null)
             {
-                SearchLogValue = "";
+                SearchLogValue = null;
                 SearchLog(null);
-                AddLogWindow addLogWindow = new AddLogWindow(_currentTour);
+                AddLogWindow addLogWindow = new AddLogWindow(CurrentTour);
                 addLogWindow.Show();
             }
             else
-            {
                 _log.Debug("Can't add Log. No corresponding Tour was selected.");
-            }
         }
         private void EditLog(object commandParameter)
         {
             _log.Info("Edit Log function was called.");
-            if (_currentLog != null)
+            if (CurrentLog != null)
             {
-                EditLogWindow editLogWindow = new EditLogWindow(_currentTour, _currentLog);
+                EditLogWindow editLogWindow = new EditLogWindow(CurrentTour, CurrentLog);
                 editLogWindow.Show();
             }
             else
-            {
                 _log.Debug("Can't edit Log. No Log was selected.");
-            }
         }
         private void RemoveLog(object commandParameter)
         {
-            _log.Info("Remove Log function was called.");
-            throw new System.NotImplementedException();
+            _log.Info("Remove TourLog function was called.");
+            if (CurrentLog != null)
+            {
+                _tourPlannerFactory.DeleteTourLog(CurrentLog);
+                CurrentLog = null;
+                FillTourLogListBox(CurrentTour);
+            }
+            else
+                _log.Debug("Can't remove Tour. No Tour was selected.");
         }
         private void ImportData(object commandParameter)
         {

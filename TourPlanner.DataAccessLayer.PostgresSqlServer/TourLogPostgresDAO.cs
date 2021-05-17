@@ -11,6 +11,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
 
         private const string SqlFindById = "SELECT * FROM public.\"TourLog\" WHERE \"Id\"=@Id;";
         private const string SqlFindByTour = "SELECT * FROM public.\"TourLog\" WHERE \"TourId\"=@TourId;";
+        private const string SqlDeleteTourLog = "DELETE FROM public.\"TourLog\" WHERE \"Id\"=@Id;";
         private const string SqlInsertNewTourLog = "INSERT INTO public.\"TourLog\" (\"TourId\",\"DateTime\",\"Report\",\"Distance\",\"TotalTime\", \"Rating\") " +
                                                    "VALUES (@TourId, @DateTime, @Report, @Distance, @TotalTime, @Rating) " +
                                                    "RETURNING \"Id\";";
@@ -54,7 +55,10 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
 
         public void DeleteTourLog(TourLog tourLog)
         {
-            throw new System.NotImplementedException();
+            DbCommand deleteCommand = _database.CreateCommand(SqlDeleteTourLog);
+            _database.DefineParameter(deleteCommand, "@Id", DbType.Int32, tourLog.Id);
+
+            _database.ExecuteScalar(deleteCommand);
         }
 
         public TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating)

@@ -79,23 +79,27 @@ namespace TourPlanner.BusinessLayer
 
         public void DeleteTour(Tour tour)
         {
-            throw new System.NotImplementedException();
+            ITourDAO tourDao = DALFactory.CreateTourDAO();
+            tourDao.DeleteTour(tour);
         }
 
         public void DeleteTourLog(TourLog tourLog)
         {
-            throw new System.NotImplementedException();
+            ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
+            tourLogDao.DeleteTourLog(tourLog);
         }
 
         public Tour EditTour(Tour tour, string tourName, string tourDescription, string tourFromLocation, string tourToLocation,
             int tourDistance)
         {
-            throw new System.NotImplementedException();
+            ITourDAO tourDao = DALFactory.CreateTourDAO();
+            return tourDao.EditTour(tour, tourName, tourDescription, tourFromLocation, tourToLocation, tourDistance);
         }
 
         public TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating)
         {
-            throw new System.NotImplementedException();
+            ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
+            return tourLogDao.EditTourLog(tourLog, dateTime, report, distance, totalTime, rating);
         }
     }
 }

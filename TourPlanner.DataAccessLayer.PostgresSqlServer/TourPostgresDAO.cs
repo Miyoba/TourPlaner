@@ -11,7 +11,8 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
     public class TourPostgresDAO : ITourDAO
     {
         private const string SqlFindById = "SELECT * FROM public.\"Tour\" WHERE \"Id\"=@Id;";
-        private const string SqlGetAllItems = "SELECT * FROM public.\"Tour\";";
+        private const string SqlGetAllTours = "SELECT * FROM public.\"Tour\";";
+        private const string SqlDeleteTour = "DELETE FROM public.\"Tour\" WHERE \"Id\"=@Id;";
         private const string SqlInsertNewTour = "INSERT INTO public.\"Tour\" (\"Name\",\"FromLocation\",\"ToLocation\",\"Description\",\"Distance\") " +
                                                 "VALUES (@Name, @FromLocation, @ToLocation, @Description, @Distance) " +
                                                 "RETURNING \"Id\";";
@@ -52,7 +53,10 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
 
         public void DeleteTour(Tour tour)
         {
-            throw new NotImplementedException();
+            DbCommand deleteCommand = _database.CreateCommand(SqlDeleteTour);
+            _database.DefineParameter(deleteCommand, "@Id", DbType.Int32, tour.Id);
+
+            _database.ExecuteScalar(deleteCommand);
         }
 
         public Tour EditTour(Tour tour, string tourName, string tourFromLocation, string tourToLocation, string tourDescription,
@@ -63,7 +67,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
 
         public IEnumerable<Tour> GetTours()
         {
-            DbCommand tourCommand = _database.CreateCommand(SqlGetAllItems);
+            DbCommand tourCommand = _database.CreateCommand(SqlGetAllTours);
 
             return QueryToursFromDatabase(tourCommand);
         }
