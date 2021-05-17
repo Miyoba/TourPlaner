@@ -2,11 +2,13 @@
 using System.Windows;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
+using TourPlanner.Logger;
 using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels {
     class EditTourViewModel : ViewModelBase
     {
+        private static readonly log4net.ILog _log = LogHelper.GetLogger();
 
         private Window _window;
         private ITourPlannerFactory _tourPlannerFactory;

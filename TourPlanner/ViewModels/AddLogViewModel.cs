@@ -2,11 +2,13 @@
 using System.Windows;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
+using TourPlanner.Logger;
 using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels {
     class AddLogViewModel : ViewModelBase
     {
+        private static readonly log4net.ILog _log = LogHelper.GetLogger();
 
         private Window _window;
         private ITourPlannerFactory _tourPlannerFactory;
@@ -94,6 +96,7 @@ namespace TourPlanner.ViewModels {
 
         public AddLogViewModel(Window window, Tour tour)
         {
+            _log.Debug("Initializing Add Log Window.");
             _window = window;
             _tourName = tour.Name;
             _tour = tour;
@@ -102,12 +105,14 @@ namespace TourPlanner.ViewModels {
 
         private void AddLog(object commandParameter)
         {
+            _log.Info("Add Log function is going to be executed.");
             _tourPlannerFactory.AddTourLog(_tour, _dateTime, _report, _distance, _totalTime, _rating);
             _window.Close();
         }
 
         private void CancelLog(object commandParameter)
         {
+            _log.Info("Add Log process was canceled.");
             _window.Close();
         }
     }

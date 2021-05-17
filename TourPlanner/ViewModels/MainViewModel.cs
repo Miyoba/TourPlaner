@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
 using TourPlanner.Logger;
@@ -184,7 +185,7 @@ namespace TourPlanner.ViewModels {
         }
         private void Add(object commandParameter)
         {
-            _log.Info("Add Tour function was called.");
+            _log.Info("Add Tour function was called. Opening AddTourWindow.");
             SearchTourName = null;
             Search(null);
             AddTourWindow addTourWindow = new AddTourWindow();

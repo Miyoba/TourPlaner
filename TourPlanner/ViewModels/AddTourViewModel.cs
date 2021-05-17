@@ -2,12 +2,12 @@
 using System.Windows;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
-using TourPlanner.DataAccessLayer.Common;
-using TourPlanner.DataAccessLayer.DAO;
+using TourPlanner.Logger;
 
 namespace TourPlanner.ViewModels {
     class AddTourViewModel : ViewModelBase
     {
+        private static readonly log4net.ILog _log = LogHelper.GetLogger();
 
         private Window _window;
         private ITourPlannerFactory _tourPlannerFactory;
@@ -81,18 +81,21 @@ namespace TourPlanner.ViewModels {
 
         public AddTourViewModel(Window window)
         {
+            _log.Debug("Initializing Add Tour Window.");
             _window = window;
             this._tourPlannerFactory = TourPlannerFactory.GetInstance();
         }
 
         private void AddTour(object commandParameter)
         {
+            _log.Info("Add Tour function is going to be executed.");
             _tourPlannerFactory.AddTour(_tourName, _tourDescription, _tourFromLocation, _tourToLocation, _tourDistance);
             _window.Close();
         }
 
         private void CancelTour(object commandParameter)
         {
+            _log.Info("Add Tour process was canceled.");
             _window.Close();
         }
     }
