@@ -9,7 +9,7 @@ using TourPlanner.Models;
 using TourPlanner.Windows;
 
 namespace TourPlanner.ViewModels {
-    class MainViewModel : ViewModelBase {
+    public class MainViewModel : ViewModelBase {
         private static readonly log4net.ILog _log = LogHelper.GetLogger();
 
         private ITourPlannerFactory _tourPlannerFactory;
@@ -188,7 +188,7 @@ namespace TourPlanner.ViewModels {
             _log.Info("Add Tour function was called. Opening AddTourWindow.");
             SearchTourName = null;
             Search(null);
-            AddTourWindow addTourWindow = new AddTourWindow();
+            AddTourWindow addTourWindow = new AddTourWindow(this);
             addTourWindow.Show();
         }
         private void Edit(object commandParameter)
@@ -196,7 +196,7 @@ namespace TourPlanner.ViewModels {
             _log.Info("Edit Tour function was called.");
             if (CurrentTour != null)
             {
-                EditTourWindow editTourWindow = new EditTourWindow(CurrentTour);
+                EditTourWindow editTourWindow = new EditTourWindow(this, CurrentTour);
                 editTourWindow.Show();
             }
             else
@@ -222,7 +222,7 @@ namespace TourPlanner.ViewModels {
             {
                 SearchLogValue = null;
                 SearchLog(null);
-                AddLogWindow addLogWindow = new AddLogWindow(CurrentTour);
+                AddLogWindow addLogWindow = new AddLogWindow(this, CurrentTour);
                 addLogWindow.Show();
             }
             else
@@ -233,7 +233,7 @@ namespace TourPlanner.ViewModels {
             _log.Info("Edit Log function was called.");
             if (CurrentLog != null)
             {
-                EditLogWindow editLogWindow = new EditLogWindow(CurrentTour, CurrentLog);
+                EditLogWindow editLogWindow = new EditLogWindow(this, CurrentTour, CurrentLog);
                 editLogWindow.Show();
             }
             else

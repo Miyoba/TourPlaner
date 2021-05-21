@@ -8,10 +8,10 @@ namespace TourPlanner.Windows {
     /// Interaktionslogik für AddTourWindow.xaml
     /// </summary>
     public partial class AddTourWindow : Window {
-        public AddTourWindow()
+        public AddTourWindow(MainViewModel mainView)
         {
             InitializeComponent();
-            this.DataContext = new AddTourViewModel(this);
+            this.DataContext = new AddTourViewModel(this, mainView);
         }
 
         private void NumbersOnly(object sender, TextCompositionEventArgs e)

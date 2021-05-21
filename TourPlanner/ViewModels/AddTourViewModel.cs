@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
 using TourPlanner.Logger;
+using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels {
     class AddTourViewModel : ViewModelBase
@@ -10,6 +11,7 @@ namespace TourPlanner.ViewModels {
         private static readonly log4net.ILog _log = LogHelper.GetLogger();
 
         private Window _window;
+        private MainViewModel _mainView;
         private ITourPlannerFactory _tourPlannerFactory;
 
         private string _tourName;
@@ -79,17 +81,19 @@ namespace TourPlanner.ViewModels {
             }
         }
 
-        public AddTourViewModel(Window window)
+        public AddTourViewModel(Window window, MainViewModel mainView)
         {
             _log.Debug("Initializing Add Tour Window.");
             _window = window;
+            _mainView = mainView;
             this._tourPlannerFactory = TourPlannerFactory.GetInstance();
         }
 
         private void AddTour(object commandParameter)
         {
             _log.Info("Add Tour function is going to be executed.");
-            _tourPlannerFactory.AddTour(_tourName, _tourDescription, _tourFromLocation, _tourToLocation, _tourDistance);
+            Tour tour =_tourPlannerFactory.AddTour(_tourName, _tourDescription, _tourFromLocation, _tourToLocation, _tourDistance);
+            _mainView.Tours.Add(tour);
             _window.Close();
         }
 

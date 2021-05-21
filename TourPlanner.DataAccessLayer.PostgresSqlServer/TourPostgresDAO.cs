@@ -46,7 +46,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             return tours.FirstOrDefault();
         }
 
-        public void AddNewTour(string tourName, string tourFromLocation, string tourToLocation, string tourDescription, int tourDistance)
+        public Tour AddNewTour(string tourName, string tourFromLocation, string tourToLocation, string tourDescription, int tourDistance)
         {
             DbCommand insertCommand = _database.CreateCommand(SqlInsertNewTour);
             _database.DefineParameter(insertCommand, "@ToLocation", DbType.String, tourToLocation);
@@ -55,7 +55,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             _database.DefineParameter(insertCommand, "@Description", DbType.String, tourDescription);
             _database.DefineParameter(insertCommand, "@Distance", DbType.Int32, tourDistance);
 
-            _database.ExecuteScalar(insertCommand);
+            return FindById(_database.ExecuteScalar(insertCommand));
         }
 
         public void DeleteTour(Tour tour)
@@ -66,7 +66,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             _database.ExecuteScalar(deleteCommand);
         }
 
-        public void EditTour(Tour tour, string tourName, string tourFromLocation, string tourToLocation, string tourDescription,
+        public Tour EditTour(Tour tour, string tourName, string tourFromLocation, string tourToLocation, string tourDescription,
             int tourDistance)
         {
             DbCommand editCommand = _database.CreateCommand(SqlEditTour);
@@ -77,7 +77,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             _database.DefineParameter(editCommand, "@Distance", DbType.Int32, tourDistance);
             _database.DefineParameter(editCommand, "@Id", DbType.Int32, tour.Id);
 
-            _database.ExecuteScalar(editCommand);
+            return FindById(_database.ExecuteScalar(editCommand));
         }
 
         public IEnumerable<Tour> GetTours()

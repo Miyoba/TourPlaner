@@ -65,16 +65,16 @@ namespace TourPlanner.BusinessLayer
             return found.Distinct();
             }
 
-        public void AddTour(string tourName, string tourDescription, string tourFromLocation, string tourToLocation, int tourDistance)
+        public Tour AddTour(string tourName, string tourDescription, string tourFromLocation, string tourToLocation, int tourDistance)
         {
             ITourDAO tourDao = DALFactory.CreateTourDAO();
-            tourDao.AddNewTour(tourName, tourFromLocation, tourToLocation, tourDescription, tourDistance);
+            return tourDao.AddNewTour(tourName, tourFromLocation, tourToLocation, tourDescription, tourDistance);
         }
 
-        public void AddTourLog(Tour tour, string dateTime, string report, int distance, string totalTime, int rating)
+        public TourLog AddTourLog(Tour tour, string dateTime, string report, int distance, string totalTime, int rating)
         {
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
-            tourLogDao.AddNewTourLog(tour, dateTime, report, distance, totalTime, rating);
+            return tourLogDao.AddNewTourLog(tour, dateTime, report, distance, totalTime, rating);
         }
 
         public void DeleteTour(Tour tour)
@@ -89,17 +89,17 @@ namespace TourPlanner.BusinessLayer
             tourLogDao.DeleteTourLog(tourLog);
         }
 
-        public void EditTour(Tour tour, string tourName, string tourDescription, string tourFromLocation, string tourToLocation,
+        public Tour EditTour(Tour tour, string tourName, string tourDescription, string tourFromLocation, string tourToLocation,
             int tourDistance)
         {
             ITourDAO tourDao = DALFactory.CreateTourDAO();
-            tourDao.EditTour(tour, tourName, tourDescription, tourFromLocation, tourToLocation, tourDistance);
+            return tourDao.EditTour(tour, tourName, tourDescription, tourFromLocation, tourToLocation, tourDistance);
         }
 
-        public void EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating)
+        public TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating)
         {
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
-            tourLogDao.EditTourLog(tourLog, dateTime, report, distance, totalTime, rating);
+            return tourLogDao.EditTourLog(tourLog, dateTime, report, distance, totalTime, rating);
         }
     }
 }

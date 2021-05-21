@@ -11,6 +11,7 @@ namespace TourPlanner.ViewModels {
         private static readonly log4net.ILog _log = LogHelper.GetLogger();
 
         private Window _window;
+        private MainViewModel _mainView;
         private ITourPlannerFactory _tourPlannerFactory;
 
         private Tour _tour;
@@ -25,6 +26,7 @@ namespace TourPlanner.ViewModels {
 
         private ICommand _addLogCommand;
         private ICommand _cancelLogCommand;
+        
 
         public ICommand AddLogCommand => _addLogCommand ??= new RelayCommand(AddLog);
         public ICommand CancelLogCommand => _cancelLogCommand ??= new RelayCommand(CancelLog);
@@ -94,19 +96,21 @@ namespace TourPlanner.ViewModels {
             }
         }
 
-        public AddLogViewModel(Window window, Tour tour)
+        public AddLogViewModel(Window window, Tour tour, MainViewModel mainView)
         {
             _log.Debug("Initializing Add Log Window.");
             _window = window;
             _tourName = tour.Name;
             _tour = tour;
+            _mainView = mainView;
             this._tourPlannerFactory = TourPlannerFactory.GetInstance();
         }
 
         private void AddLog(object commandParameter)
         {
             _log.Info("Add Log function is going to be executed.");
-            _tourPlannerFactory.AddTourLog(_tour, _dateTime, _report, _distance, _totalTime, _rating);
+            TourLog tourLog = _tourPlannerFactory.AddTourLog(_tour, _dateTime, _report, _distance, _totalTime, _rating);
+            _mainView.Logs.Add(tourLog);
             _window.Close();
         }
 

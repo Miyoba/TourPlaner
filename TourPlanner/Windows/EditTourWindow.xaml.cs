@@ -9,10 +9,10 @@ namespace TourPlanner.Windows {
     /// Interaktionslogik für EditTourWindow.xaml
     /// </summary>
     public partial class EditTourWindow : Window {
-        public EditTourWindow(Tour tour)
+        public EditTourWindow(MainViewModel mainView, Tour tour)
         {
             InitializeComponent();
-            this.DataContext = new EditTourViewModel(this, tour);
+            this.DataContext = new EditTourViewModel(this, tour, mainView);
         }
 
         private void NumbersOnly(object sender, TextCompositionEventArgs e)

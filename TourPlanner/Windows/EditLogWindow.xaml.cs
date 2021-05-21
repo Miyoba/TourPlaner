@@ -9,10 +9,10 @@ namespace TourPlanner.Windows {
     /// Interaktionslogik für EditLogWindow.xaml
     /// </summary>
     public partial class EditLogWindow : Window {
-        public EditLogWindow(Tour tour, TourLog log)
+        public EditLogWindow(MainViewModel mainView, Tour tour, TourLog log)
         {
             InitializeComponent();
-            this.DataContext = new EditLogViewModel(this, tour, log);
+            this.DataContext = new EditLogViewModel(this, tour, log, mainView);
         }
 
         private void NumbersOnly(object sender, TextCompositionEventArgs e)

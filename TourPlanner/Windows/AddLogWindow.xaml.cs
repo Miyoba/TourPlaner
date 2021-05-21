@@ -9,10 +9,10 @@ namespace TourPlanner.Windows {
     /// Interaktionslogik für AddLogWindow.xaml
     /// </summary>
     public partial class AddLogWindow : Window {
-        public AddLogWindow(Tour tour)
+        public AddLogWindow(MainViewModel mainView, Tour tour)
         {
             InitializeComponent();
-            this.DataContext = new AddLogViewModel(this, tour);
+            this.DataContext = new AddLogViewModel(this, tour, mainView);
         }
 
         private void NumbersOnly(object sender, TextCompositionEventArgs e)
