@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
+using Microsoft.Win32;
 using TourPlanner.BusinessLayer;
 using TourPlanner.Logger;
 using TourPlanner.Models;
@@ -254,12 +256,31 @@ namespace TourPlanner.ViewModels {
         private void ImportData(object commandParameter)
         {
             _log.Info("Import data function was called.");
-            throw new System.NotImplementedException();
+            if (_tourPlannerFactory.ImportData())
+            {
+                _log.Info("Data was successfully exported.");
+                FillTourListBox();
+                MessageBox.Show("Data successfully imported!", "Import Data", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                _log.Warn("Unsuccessfully tried to export data.");
+                var dialog = MessageBox.Show("An unexpected error occurred while importing the data!", "Import Data", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void ExportData(object commandParameter)
         {
             _log.Info("Export data function was called.");
-            throw new System.NotImplementedException();
+            if (_tourPlannerFactory.ExportData())
+            {
+                _log.Info("Data was successfully exported.");
+                MessageBox.Show("Data successfully exported!", "Export Data", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                _log.Warn("Unsuccessfully tried to export data.");
+                var dialog = MessageBox.Show("An unexpected error occurred while exporting the data!", "Export Data", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void PrintData(object commandParameter)
         {

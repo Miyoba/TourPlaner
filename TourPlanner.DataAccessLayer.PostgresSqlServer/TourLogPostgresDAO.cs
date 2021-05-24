@@ -10,6 +10,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
     class TourLogPostgresDAO : ITourLogDAO {
 
         private const string SqlFindById = "SELECT * FROM public.\"TourLog\" WHERE \"Id\"=@Id;";
+        private const string SqlGetAllTourLogs = "SELECT * FROM public.\"TourLog\";";
         private const string SqlFindByTour = "SELECT * FROM public.\"TourLog\" WHERE \"TourId\"=@TourId;";
         private const string SqlDeleteTourLog = "DELETE FROM public.\"TourLog\" WHERE \"Id\"=@Id;";
         private const string SqlEditTourLog = "UPDATE public.\"TourLog\" SET " +
@@ -83,6 +84,12 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             return QueryTourLogsFromTour(tour);
         }
 
+        public IEnumerable<TourLog> GetAllLogs()
+        {
+            DbCommand getLogsCommand = _database.CreateCommand(SqlGetAllTourLogs);
+            return QueryTourLogsFromDatabase(getLogsCommand);
+        }
+
         private IEnumerable<TourLog> QueryTourLogsFromTour(Tour tour)
         {
             DbCommand getLogsCommand = _database.CreateCommand(SqlFindByTour);
@@ -101,7 +108,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
                 {
                     tourLogs.Add(new TourLog(
                         (int)reader["Id"],
-                        _tourDAO.FindById((int)reader["TourId"]),
+                        (int)reader["TourId"],
                         (string)reader["DateTime"],
                         (string)reader["Report"],
                         (int)reader["Distance"],

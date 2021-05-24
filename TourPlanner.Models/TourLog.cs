@@ -4,14 +4,14 @@ using System.Dynamic;
 namespace TourPlanner.Models {
     public class TourLog {
         public int Id  { get; set; }
-        public Tour TourId { get; set; }
+        public int TourId { get; set; }
         public string DateTime { get; set; }
         public string Report { get; set; }
         public int Distance { get; set; }
         public string TotalTime { get; set; }
         public int Rating { get; set; }
 
-        public TourLog(int id, Tour tourId, string dateTime, string report, int distance, string totalTime, int rating)
+        public TourLog(int id, int tourId, string dateTime, string report, int distance, string totalTime, int rating)
         {
             this.Id = id;
             this.TourId = tourId;

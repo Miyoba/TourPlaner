@@ -15,5 +15,7 @@ namespace TourPlanner.BusinessLayer
         void DeleteTourLog(TourLog tourLog);
         Tour EditTour(Tour tour, string tourName, string tourDescription, string tourFromLocation, string tourToLocation, int tourDistance);
         TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating);
+        bool ExportData();
+        bool ImportData();
     }
 }

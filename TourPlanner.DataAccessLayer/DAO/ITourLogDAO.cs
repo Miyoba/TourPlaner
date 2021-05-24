@@ -9,5 +9,6 @@ namespace TourPlanner.DataAccessLayer.DAO {
         void DeleteTourLog(TourLog tourLog);
         TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating);
         IEnumerable<TourLog> GetTourLogs(Tour tour);
+        IEnumerable<TourLog> GetAllLogs();
     }
 }

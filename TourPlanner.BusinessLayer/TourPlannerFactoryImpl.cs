@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using TourPlanner.DataAccessLayer.Common;
 using TourPlanner.DataAccessLayer.DAO;
@@ -100,6 +101,35 @@ namespace TourPlanner.BusinessLayer
         {
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
             return tourLogDao.EditTourLog(tourLog, dateTime, report, distance, totalTime, rating);
+        }
+
+        public bool ExportData()
+        {
+            ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
+
+            IEnumerable<TourLog> logs = tourLogDao.GetAllLogs();
+            return DataFileManager.ExportData(GetTours(), logs);
+        }
+
+        public bool ImportData()
+        {
+            JsonData data = DataFileManager.ImportData();
+
+            if (data == null)
+                return false;
+
+            foreach (var tour in data.Tours)
+            {
+                Tour dbTour = AddTour(tour.Name, tour.Description, tour.FromLocation, tour.ToLocation, tour.Distance);
+                foreach (var log in data.Logs)
+                {
+                    if (tour.Id == log.TourId)
+                    {
+                        AddTourLog(dbTour, log.DateTime, log.Report, log.Distance, log.TotalTime, log.Rating);
+                    }
+                }
+            }
+            return true;
         }
     }
 }
