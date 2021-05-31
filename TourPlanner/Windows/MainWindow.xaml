@@ -50,7 +50,7 @@
                 <Label Grid.Column = "0" Margin="0,10,20,0" Content="Tours:" Grid.ColumnSpan="2"/>
                 <TextBox Grid.Column = "1" VerticalContentAlignment="Center" VerticalAlignment="Bottom" Height="20" Margin="2,0,0,2" Text="{Binding SearchTourName, Mode=TwoWay}" Grid.ColumnSpan="2"/>
                 <Button Grid.Column = "3" VerticalAlignment="Bottom" Margin="0,0,0,2"  MinWidth="30" MaxWidth="100" HorizontalAlignment="Left" Height="20" Command="{Binding SearchCommand}">
-                    <Image Source="/Images/Search_Icon.png" AutomationProperties.HelpText="Search ..."/>
+                    <Image Source="/Images/Icon/Search_Icon.png" AutomationProperties.HelpText="Search ..."/>
                 </Button>
             </Grid>
             <Grid Grid.Column="1" Grid.Row="0">
@@ -126,7 +126,7 @@
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Image Grid.Column="1" Source="/Images/No_Image_Icon.png" AutomationProperties.HelpText="Map Image"/>
+            <Image Grid.Column="1" Source="{Binding CurrentTour.ImagePath}" AutomationProperties.HelpText="Map Image"/>
         </Grid>
 
         <Grid Grid.Row="3">
@@ -147,7 +147,7 @@
                 <Label Grid.Column = "0" Margin="0,10,0,0" Content="Logs:"/>
                 <TextBox Grid.Column = "1" VerticalContentAlignment="Center" VerticalAlignment="Bottom" Height="20" Margin="2,2,0,2" Text="{Binding SearchLogValue, Mode=TwoWay}"/>
                 <Button Grid.Column = "2" VerticalAlignment="Bottom" Margin="0,2,2,2"  MinWidth="30" MaxWidth="100" HorizontalAlignment="Left" Height="20" Command="{Binding SearchLogCommand}">
-                    <Image Source="/Images/Search_Icon.png" AutomationProperties.HelpText="Search ..."/>
+                    <Image Source="/Images/Icon/Search_Icon.png" AutomationProperties.HelpText="Search ..."/>
                 </Button>
             </Grid>
 

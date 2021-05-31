@@ -5,9 +5,9 @@ namespace TourPlanner.DataAccessLayer.DAO {
     public interface ITourDAO
     {
         Tour FindById(int tourId);
-        Tour AddNewTour(string tourName, string tourFromLocation, string tourToLocation, string tourDescription, int tourDistance);
+        Tour AddNewTour(string tourName, string tourFromLocation, string tourToLocation, string tourDescription, int tourDistance, string tourImagePath);
         void DeleteTour(Tour tour);
-        Tour EditTour(Tour tour, string tourName, string tourFromLocation, string tourToLocation, string tourDescription, int tourDistance);
+        Tour EditTour(Tour tour, string tourName, string tourFromLocation, string tourToLocation, string tourDescription, int tourDistance, string tourImagePath);
         IEnumerable<Tour> GetTours();
     }
 }

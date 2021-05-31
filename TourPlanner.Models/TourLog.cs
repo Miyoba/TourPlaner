@@ -1,6 +1,4 @@
-﻿using System;
-using System.Dynamic;
-
+﻿
 namespace TourPlanner.Models {
     public class TourLog {
         public int Id  { get; set; }

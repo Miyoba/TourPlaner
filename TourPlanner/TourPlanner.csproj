@@ -6,14 +6,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Images\No_Image_Icon.png" />
-    <None Remove="Images\Search_Icon.png" />
-  </ItemGroup>
-
-  <ItemGroup>
+	<ItemGroup>
     <PackageReference Include="Json.Net" Version="1.0.33" />
     <PackageReference Include="log4net" Version="2.0.12" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,8 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\No_Image_Icon.png" />
-    <Resource Include="Images\Search_Icon.png" />
+    <Resource Include="Images\Icon\No_Image_Icon.png" />
+    <Resource Include="Images\Icon\Search_Icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <Folder Include="Images\TourImages\" />
   </ItemGroup>
 
 </Project>

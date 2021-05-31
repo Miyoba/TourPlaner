@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using TourPlanner.DataAccessLayer.Common;
 using TourPlanner.DataAccessLayer.DAO;
@@ -9,6 +8,7 @@ namespace TourPlanner.BusinessLayer
 {
     internal class TourPlannerFactoryImpl : ITourPlannerFactory
     {
+
         public IEnumerable<Tour> GetTours()
         {
             ITourDAO tourDAO = DALFactory.CreateTourDAO();
@@ -69,7 +69,8 @@ namespace TourPlanner.BusinessLayer
         public Tour AddTour(string tourName, string tourDescription, string tourFromLocation, string tourToLocation, int tourDistance)
         {
             ITourDAO tourDao = DALFactory.CreateTourDAO();
-            return tourDao.AddNewTour(tourName, tourFromLocation, tourToLocation, tourDescription, tourDistance);
+            string imagePath = MapQuest.LoadImage(tourFromLocation, tourToLocation);
+            return tourDao.AddNewTour(tourName, tourFromLocation, tourToLocation, tourDescription, tourDistance, imagePath);
         }
 
         public TourLog AddTourLog(Tour tour, string dateTime, string report, int distance, string totalTime, int rating)
@@ -81,6 +82,14 @@ namespace TourPlanner.BusinessLayer
         public void DeleteTour(Tour tour)
         {
             ITourDAO tourDao = DALFactory.CreateTourDAO();
+            if (tour.HasImage())
+            {
+                //TODO Fix image deletion
+                //Image tempImage = Image.FromFile(tour.ImagePath);
+                //tempImage.Dispose();
+                //File.Delete(tour.ImagePath);
+            }
+
             tourDao.DeleteTour(tour);
         }
 
@@ -94,7 +103,8 @@ namespace TourPlanner.BusinessLayer
             int tourDistance)
         {
             ITourDAO tourDao = DALFactory.CreateTourDAO();
-            return tourDao.EditTour(tour, tourName, tourDescription, tourFromLocation, tourToLocation, tourDistance);
+            string imagePath = MapQuest.LoadImage(tourFromLocation, tourToLocation);
+            return tourDao.EditTour(tour, tourName, tourDescription, tourFromLocation, tourToLocation, tourDistance, imagePath);
         }
 
         public TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating)
