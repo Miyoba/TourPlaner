@@ -141,5 +141,24 @@ namespace TourPlanner.BusinessLayer
             }
             return true;
         }
+
+        public bool PrintData(Tour currentTour)
+        {
+            ReportGenerator gen = new ReportGenerator();
+            ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
+            JsonData data = new JsonData(new List<Tour>() {currentTour}, tourLogDao.GetTourLogs(currentTour));
+            gen.GeneratePDFReportForTours(data);
+            return true;
+        }
+
+        public bool PrintAllData()
+        {
+            ReportGenerator gen = new ReportGenerator();
+            ITourDAO tourDao = DALFactory.CreateTourDAO();
+            ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
+            JsonData data = new JsonData(tourDao.GetTours(), tourLogDao.GetAllLogs());
+            gen.GeneratePDFReportForTours(data);
+            return true;
+        }
     }
 }

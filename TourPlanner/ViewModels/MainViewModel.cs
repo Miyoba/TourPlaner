@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.Win32;
 using TourPlanner.BusinessLayer;
 using TourPlanner.Logger;
 using TourPlanner.Models;
@@ -32,6 +30,7 @@ namespace TourPlanner.ViewModels {
         private ICommand _importDataCommand;
         private ICommand _exportDataCommand;
         private ICommand _printDataCommand;
+        private ICommand _printAllDataCommand;
 
 
 
@@ -47,6 +46,7 @@ namespace TourPlanner.ViewModels {
         public ICommand ImportDataCommand => _importDataCommand ??= new RelayCommand(ImportData);
         public ICommand ExportDataCommand => _exportDataCommand ??= new RelayCommand(ExportData);
         public ICommand PrintDataCommand => _printDataCommand ??= new RelayCommand(PrintData);
+        public ICommand PrintAllDataCommand => _printAllDataCommand ??= new RelayCommand(PrintAllData);
 
         public ObservableCollection<Tour> Tours { get; set; }
         public ObservableCollection<TourLog> Logs { get; set; }
@@ -285,7 +285,40 @@ namespace TourPlanner.ViewModels {
         private void PrintData(object commandParameter)
         {
             _log.Info("Print data function was called.");
-            throw new System.NotImplementedException();
+            if (CurrentTour != null)
+            {
+                if (_tourPlannerFactory.PrintData(CurrentTour))
+                {
+                    _log.Info("Tour PDF was successfully created.");
+                    MessageBox.Show("PDF successfully created.", "Print to PDF", MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                }
+                else
+                {
+                    _log.Warn("Unsuccessfully tried to print Tour to PDF.");
+                    var dialog = MessageBox.Show("An unexpected error occurred while creating the pdf!", "Print to PDF",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                _log.Debug("Can't print PDF. No Tour was selected.");
+            }
+        }
+
+        private void PrintAllData(object commandParameter)
+        {
+            _log.Info("Print all data function was called.");
+            if (_tourPlannerFactory.PrintAllData())
+            {
+                _log.Info("All PDF was successfully created.");
+                MessageBox.Show("PDF successfully created.", "Print All to PDF", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                _log.Warn("Unsuccessfully tried to print All to PDF.");
+                var dialog = MessageBox.Show("An unexpected error occurred while creating the pdf!", "Print All to PDF", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

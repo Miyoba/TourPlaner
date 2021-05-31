@@ -17,5 +17,7 @@ namespace TourPlanner.BusinessLayer
         TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating);
         bool ExportData();
         bool ImportData();
+        bool PrintData(Tour currentTour);
+        bool PrintAllData();
     }
 }
