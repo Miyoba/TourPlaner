@@ -11,14 +11,14 @@ namespace TourPlanner.BusinessLayer
 
         public IEnumerable<Tour> GetTours()
         {
-            ITourDAO tourDAO = DALFactory.CreateTourDAO();
-            return tourDAO.GetTours();
+            ITourDAO tourDao = DALFactory.CreateTourDAO();
+            return tourDao.GetTours();
         }
 
         public IEnumerable<TourLog> GetTourLogs(Tour tour)
         {
-            ITourLogDAO tourLogDAO = DALFactory.CreateTourLogDAO();
-            return tourLogDAO.GetTourLogs(tour);
+            ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
+            return tourLogDao.GetTourLogs(tour);
         }
 
         public IEnumerable<Tour> FindTour(IEnumerable<Tour> tours, IEnumerable<Tour> found, string fieldName, string searchArg, bool caseSensitive = false)
@@ -39,11 +39,12 @@ namespace TourPlanner.BusinessLayer
 
             if (searchArg != null)
             {
-                found = FindTour(tours, found, "Name", searchArg, caseSensitive);
-                found = FindTour(tours, found, "FromLocation", searchArg, caseSensitive);
-                found = FindTour(tours, found, "ToLocation", searchArg, caseSensitive);
-                found = FindTour(tours, found, "Description", searchArg, caseSensitive);
-                found = FindTour(tours, found, "Distance", searchArg, caseSensitive);
+                var enumerable = tours.ToList();
+                found = FindTour(enumerable, found, "Name", searchArg, caseSensitive);
+                found = FindTour(enumerable, found, "FromLocation", searchArg, caseSensitive);
+                found = FindTour(enumerable, found, "ToLocation", searchArg, caseSensitive);
+                found = FindTour(enumerable, found, "Description", searchArg, caseSensitive);
+                found = FindTour(enumerable, found, "Distance", searchArg, caseSensitive);
             }
 
             return found.Distinct();
@@ -54,13 +55,15 @@ namespace TourPlanner.BusinessLayer
         {
             IEnumerable<TourLog> tourLogs = GetTourLogs(tour);
             IEnumerable<TourLog> found = new List<TourLog>();
+
             if (searchArg != null)
             {
-                found = FindTourLog(tourLogs, found, "DateTime", searchArg, caseSensitive);
-                found = FindTourLog(tourLogs, found, "Report", searchArg, caseSensitive);
-                found = FindTourLog(tourLogs, found, "Distance", searchArg, caseSensitive);
-                found = FindTourLog(tourLogs, found, "TotalTime", searchArg, caseSensitive);
-                found = FindTourLog(tourLogs, found, "Rating", searchArg, caseSensitive);
+                var enumerable = tourLogs.ToList();
+                found = FindTourLog(enumerable, found, "DateTime", searchArg, caseSensitive);
+                found = FindTourLog(enumerable, found, "Report", searchArg, caseSensitive);
+                found = FindTourLog(enumerable, found, "Distance", searchArg, caseSensitive);
+                found = FindTourLog(enumerable, found, "TotalTime", searchArg, caseSensitive);
+                found = FindTourLog(enumerable, found, "Rating", searchArg, caseSensitive);
             }
 
             return found.Distinct();
@@ -69,7 +72,8 @@ namespace TourPlanner.BusinessLayer
         public Tour AddTour(string tourName, string tourDescription, string tourFromLocation, string tourToLocation, int tourDistance)
         {
             ITourDAO tourDao = DALFactory.CreateTourDAO();
-            string imagePath = MapQuest.LoadImage(tourFromLocation, tourToLocation);
+            IMapQuest mapQuest = new MapQuest();
+            string imagePath = mapQuest.LoadImage(tourFromLocation, tourToLocation);
             return tourDao.AddNewTour(tourName, tourFromLocation, tourToLocation, tourDescription, tourDistance, imagePath);
         }
 
@@ -103,7 +107,8 @@ namespace TourPlanner.BusinessLayer
             int tourDistance)
         {
             ITourDAO tourDao = DALFactory.CreateTourDAO();
-            string imagePath = MapQuest.LoadImage(tourFromLocation, tourToLocation);
+            IMapQuest mapQuest = new MapQuest();
+            string imagePath = mapQuest.LoadImage(tourFromLocation, tourToLocation);
             return tourDao.EditTour(tour, tourName, tourDescription, tourFromLocation, tourToLocation, tourDistance, imagePath);
         }
 
@@ -116,14 +121,17 @@ namespace TourPlanner.BusinessLayer
         public bool ExportData()
         {
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
+            IDataFileManager manager = new DataFileManager();
 
             IEnumerable<TourLog> logs = tourLogDao.GetAllLogs();
-            return DataFileManager.ExportData(GetTours(), logs);
+
+            return manager.ExportData(GetTours(), logs);
         }
 
         public bool ImportData()
         {
-            JsonData data = DataFileManager.ImportData();
+            IDataFileManager manager = new DataFileManager();
+            JsonData data = manager.ImportData();
 
             if (data == null)
                 return false;
@@ -146,9 +154,7 @@ namespace TourPlanner.BusinessLayer
         {
             ReportGenerator gen = new ReportGenerator();
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
-            JsonData data = new JsonData(new List<Tour>() {currentTour}, tourLogDao.GetTourLogs(currentTour));
-            gen.GeneratePDFReportForTours(data);
-            return true;
+            return gen.GeneratePDFReportForTours(new List<Tour>() {currentTour}, tourLogDao.GetTourLogs(currentTour));
         }
 
         public bool PrintAllData()
@@ -156,9 +162,7 @@ namespace TourPlanner.BusinessLayer
             ReportGenerator gen = new ReportGenerator();
             ITourDAO tourDao = DALFactory.CreateTourDAO();
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
-            JsonData data = new JsonData(tourDao.GetTours(), tourLogDao.GetAllLogs());
-            gen.GeneratePDFReportForTours(data);
-            return true;
+            return gen.GeneratePDFReportForTours(tourDao.GetTours(), tourLogDao.GetAllLogs());
         }
     }
 }

@@ -8,19 +8,27 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 namespace TourPlanner.BusinessLayer {
-    public class MapQuest
+    public class MapQuest : IMapQuest
     {
-        private static readonly string BaseURL = "https://www.mapquestapi.com";
-        private static readonly HttpClient _client = new HttpClient();
-        private static readonly string _apiKey = ConfigurationManager.AppSettings["MapQuestKey"];
-        private static readonly string _filePath = ConfigurationManager.AppSettings["ImagePath"];
+        private readonly string _baseUrl;
+        private readonly HttpClient _client;
+        private readonly string _apiKey;
+        private readonly string _filePath;
 
-        public static string LoadImage(string fromLocation, string toLocation)
+        public MapQuest()
+        {
+            _baseUrl = "https://www.mapquestapi.com";
+            _client = new HttpClient();
+            _apiKey = ConfigurationManager.AppSettings["MapQuestKey"];
+            _filePath = ConfigurationManager.AppSettings["ImagePath"];
+        }
+
+        public string LoadImage(string fromLocation, string toLocation)
         {
             if (DoesLocationExist(fromLocation) && DoesLocationExist(toLocation))
             {
 
-                var url = BaseURL + "/staticmap/v5/map?start=" + fromLocation + "&end=" + toLocation + "&size=600,400@2x&key=" + _apiKey;
+                var url = _baseUrl + "/staticmap/v5/map?start=" + fromLocation + "&end=" + toLocation + "&size=600,400@2x&key=" + _apiKey;
                 var fileName = GetUniqueFilename();
                 var fullFilePath = _filePath + fileName + ".jpg";
                 using (WebClient client = new WebClient())
@@ -34,7 +42,7 @@ namespace TourPlanner.BusinessLayer {
             return "";
         }
 
-        private static string GetUniqueFilename()
+        private string GetUniqueFilename()
         {
             DateTime dt = DateTime.Now;
             var checkName = dt.ToString("yyyyMMdd");
@@ -55,9 +63,9 @@ namespace TourPlanner.BusinessLayer {
             return checkName+"_"+fileIndex;
         }
 
-        public static bool DoesLocationExist(string location)
+        public bool DoesLocationExist(string location)
         {
-            var task = Task.Run(() => _client.GetAsync(BaseURL + "/geocoding/v1/address?key=" + _apiKey + "&location=" + location));
+            var task = Task.Run(() => _client.GetAsync(_baseUrl + "/geocoding/v1/address?key=" + _apiKey + "&location=" + location));
             task.Wait();
 
             var stringJsonResponse = task.Result.Content.ReadAsStringAsync().Result;

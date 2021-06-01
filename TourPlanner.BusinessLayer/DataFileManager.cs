@@ -5,8 +5,8 @@ using Newtonsoft.Json;
 using TourPlanner.Models;
 
 namespace TourPlanner.BusinessLayer {
-    class DataFileManager {
-        public static bool ExportData(IEnumerable<Tour> tours, IEnumerable<TourLog> logs)
+    class DataFileManager : IDataFileManager{
+        public bool ExportData(IEnumerable<Tour> tours, IEnumerable<TourLog> logs)
         {
             SaveFileDialog sfdlg = new SaveFileDialog();  
             sfdlg.Filter = "Json Files (*.json) | *.json"; //Here you can filter which all files you wanted allow to open  
@@ -21,7 +21,7 @@ namespace TourPlanner.BusinessLayer {
             return false;
         }
 
-        public static JsonData ImportData()
+        public JsonData ImportData()
         {
             OpenFileDialog ofd = new OpenFileDialog();  
             ofd.Title = "Open a Json File";  

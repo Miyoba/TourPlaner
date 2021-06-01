@@ -1,11 +1,12 @@
-﻿using TourPlanner.Models;
+﻿using System.Collections.Generic;
+using TourPlanner.Models;
 using IronPdf;
 using Microsoft.Win32;
 
 namespace TourPlanner.BusinessLayer {
-    public class ReportGenerator
+    public class ReportGenerator :IReportGenerator
     {
-        public void GeneratePDFReportForTours(JsonData data)
+        public bool GeneratePDFReportForTours(IEnumerable<Tour> tours, IEnumerable<TourLog> logs)
         {
 
             SaveFileDialog sfdlg = new SaveFileDialog();  
@@ -14,19 +15,22 @@ namespace TourPlanner.BusinessLayer {
             if (!sfdlg.FileName.Equals(""))
             {
                 var htmlToPdf = new HtmlToPdf();
-                var pdf = htmlToPdf.RenderHtmlAsPdf(ConvertDataToHTML(data));
+                var pdf = htmlToPdf.RenderHtmlAsPdf(ConvertDataToHTML(tours, logs));
                 pdf.SaveAs(sfdlg.FileName);
+                return true;
             }
+
+            return false;
         }
 
-        private string ConvertDataToHTML(JsonData data)
+        private string ConvertDataToHTML(IEnumerable<Tour> tours, IEnumerable<TourLog> logs)
         {
             string htmlText = @"<html>"+
                 "<head>" +
                 "<title>TourPlanner Report</title>" +
                 "</head>";
 
-            foreach (var tour in data.Tours)
+            foreach (var tour in tours)
             {
                 htmlText += @"<body>"+
                             "<h1>Tour: "+tour.Name+"</h1>" +
@@ -37,7 +41,7 @@ namespace TourPlanner.BusinessLayer {
                             "<b>Route information: </b><br>"+
                             "<img src='"+tour.ImagePath+"' alt='TourRoute' width='500'>"+
                             "<h2>Logs from Tour: " + tour.Name + "</h2>";
-                foreach (var log in data.Logs)
+                foreach (var log in logs)
                 {
                     if (log.TourId == tour.Id)
                     {
