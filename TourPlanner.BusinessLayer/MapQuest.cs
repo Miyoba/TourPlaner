@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Configuration;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -33,8 +35,16 @@ namespace TourPlanner.BusinessLayer {
                 var fullFilePath = _filePath + fileName + ".jpg";
                 using (WebClient client = new WebClient())
                 {
-                    client.DownloadFile(new Uri(url), fullFilePath);
-                    client.Dispose();
+                    //client.DownloadFile(new Uri(url), fullFilePath);
+                    //client.Dispose();
+                    var data = client.DownloadData(url);
+                    using(var ms = new MemoryStream(data))
+                    {
+                        using (var image = Image.FromStream(ms))
+                        {
+                            image.Save(fullFilePath, ImageFormat.Jpeg);
+                        }
+                    }
                 }
                 return fullFilePath;
             }

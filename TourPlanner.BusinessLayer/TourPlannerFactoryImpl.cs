@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using TourPlanner.DataAccessLayer.Common;
 using TourPlanner.DataAccessLayer.DAO;
@@ -83,15 +85,16 @@ namespace TourPlanner.BusinessLayer
             return tourLogDao.AddNewTourLog(tour, dateTime, report, distance, totalTime, rating);
         }
 
-        public void DeleteTour(Tour tour)
+        public void DeleteTour(Tour tour, string imagePath)
         {
             ITourDAO tourDao = DALFactory.CreateTourDAO();
-            if (tour.HasImage())
+
+            if (!imagePath.Equals(""))
             {
-                //TODO Fix image deletion
-                //Image tempImage = Image.FromFile(tour.ImagePath);
+                //TODO
+                //Image tempImage = Image.FromFile(imagePath);
                 //tempImage.Dispose();
-                //File.Delete(tour.ImagePath);
+                //File.Delete(imagePath);
             }
 
             tourDao.DeleteTour(tour);

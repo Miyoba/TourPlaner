@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace TourPlanner.Models
 {
     public class Tour
@@ -12,9 +14,11 @@ namespace TourPlanner.Models
         public string ImagePath { 
             get
             {
-                if (_imagePath.Equals("") || _imagePath == null)
+                if (_imagePath == null || _imagePath.Equals(""))
                     return @".\..\..\..\Images\Icon\No_Image_Icon.png";
-                return _imagePath;
+                if(File.Exists(_imagePath))
+                    return _imagePath;
+                return @".\..\..\..\Images\Icon\No_Image_Icon.png";
             }
             set => _imagePath = value;
         }

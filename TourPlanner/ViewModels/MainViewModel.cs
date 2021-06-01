@@ -207,10 +207,17 @@ namespace TourPlanner.ViewModels {
         private void Remove(object commandParameter)
         {
             _log.Info("Remove Tour function was called.");
+            string imagePath = "";
+
             if (CurrentTour != null)
             {
-                _tourPlannerFactory.DeleteTour(CurrentTour);
+                if(CurrentTour.HasImage()) 
+                    imagePath = CurrentTour.ImagePath;
+                CurrentTour.ImagePath = null;
+                RaisePropertyChangedEvent(nameof(CurrentTour));
+                _tourPlannerFactory.DeleteTour(CurrentTour, imagePath);
                 CurrentTour = null;
+
                 Logs.Clear();
                 FillTourListBox();
             }
