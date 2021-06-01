@@ -5,6 +5,6 @@ namespace TourPlanner.BusinessLayer
 {
     public interface IReportGenerator
     {
-        public bool GeneratePDFReportForTours(IEnumerable<Tour> tours, IEnumerable<TourLog> logs);
+        public bool GeneratePDFReportForTours(IEnumerable<Tour> tours, IEnumerable<TourLog> logs, bool summarize);
     }
 }

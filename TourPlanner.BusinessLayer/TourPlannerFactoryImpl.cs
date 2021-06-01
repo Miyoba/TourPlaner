@@ -154,7 +154,7 @@ namespace TourPlanner.BusinessLayer
         {
             ReportGenerator gen = new ReportGenerator();
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
-            return gen.GeneratePDFReportForTours(new List<Tour>() {currentTour}, tourLogDao.GetTourLogs(currentTour));
+            return gen.GeneratePDFReportForTours(new List<Tour>() {currentTour}, tourLogDao.GetTourLogs(currentTour), false);
         }
 
         public bool PrintAllData()
@@ -162,7 +162,7 @@ namespace TourPlanner.BusinessLayer
             ReportGenerator gen = new ReportGenerator();
             ITourDAO tourDao = DALFactory.CreateTourDAO();
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
-            return gen.GeneratePDFReportForTours(tourDao.GetTours(), tourLogDao.GetAllLogs());
+            return gen.GeneratePDFReportForTours(tourDao.GetTours(), tourLogDao.GetAllLogs(), true);
         }
     }
 }
