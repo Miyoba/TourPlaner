@@ -124,7 +124,7 @@ namespace TourPlanner.BusinessLayer
         public bool ExportData()
         {
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
-            IDataFileManager manager = new DataFileManager();
+            IDataFileManager manager = new DataFileManager(new MySaveFileDialog(),new MyOpenFileDialog());
 
             IEnumerable<TourLog> logs = tourLogDao.GetAllLogs();
 
@@ -133,7 +133,7 @@ namespace TourPlanner.BusinessLayer
 
         public bool ImportData()
         {
-            IDataFileManager manager = new DataFileManager();
+            IDataFileManager manager = new DataFileManager(new MySaveFileDialog(),new MyOpenFileDialog());
             JsonData data = manager.ImportData();
 
             if (data == null)
@@ -155,14 +155,14 @@ namespace TourPlanner.BusinessLayer
 
         public bool PrintData(Tour currentTour)
         {
-            ReportGenerator gen = new ReportGenerator();
+            ReportGenerator gen = new ReportGenerator(new MySaveFileDialog());
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
             return gen.GeneratePDFReportForTours(new List<Tour>() {currentTour}, tourLogDao.GetTourLogs(currentTour), false);
         }
 
         public bool PrintAllData()
         {
-            ReportGenerator gen = new ReportGenerator();
+            ReportGenerator gen = new ReportGenerator(new MySaveFileDialog());
             ITourDAO tourDao = DALFactory.CreateTourDAO();
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
             return gen.GeneratePDFReportForTours(tourDao.GetTours(), tourLogDao.GetAllLogs(), true);

@@ -36,7 +36,7 @@ namespace TourPlanner.Models
 
         public string GetFieldValue(string fieldName, bool caseSensitive = false)
         {
-            var ergObj = this.GetType().GetProperty(fieldName).GetValue(this, null);
+            var ergObj = this.GetType().GetProperty(fieldName)?.GetValue(this, null);
             
             if (ergObj == null)
                 return "";

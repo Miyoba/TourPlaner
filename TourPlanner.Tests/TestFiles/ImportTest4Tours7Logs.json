@@ -1,0 +1,105 @@
+{
+  "Tours": [
+    {
+      "Id": 113,
+      "Name": "BackHome",
+      "Description": "Weg nach Hause",
+      "FromLocation": "Berlin",
+      "ToLocation": "Wien",
+      "Distance": 500,
+      "ImagePath": "C:\\Users\\Wolfgang\\Dropbox\\FH\\4.Semester\\SWEI\\Projekte\\TourPlanner\\TourPlanner\\Images\\TourImages\\20210605_1.jpg"
+    },
+    {
+      "Id": 114,
+      "Name": "RomanticVacation",
+      "Description": "Dinner for 2",
+      "FromLocation": "Wien",
+      "ToLocation": "Paris",
+      "Distance": 1232,
+      "ImagePath": "C:\\Users\\Wolfgang\\Dropbox\\FH\\4.Semester\\SWEI\\Projekte\\TourPlanner\\TourPlanner\\Images\\TourImages\\20210605_2.jpg"
+    },
+    {
+      "Id": 115,
+      "Name": "FamilyTrip",
+      "Description": "Yeehaw to the big City",
+      "FromLocation": "Texas",
+      "ToLocation": "Washington",
+      "Distance": 2534,
+      "ImagePath": "C:\\Users\\Wolfgang\\Dropbox\\FH\\4.Semester\\SWEI\\Projekte\\TourPlanner\\TourPlanner\\Images\\TourImages\\20210605_3.jpg"
+    },
+    {
+      "Id": 116,
+      "Name": "qwer",
+      "Description": "asdf",
+      "FromLocation": "yxc",
+      "ToLocation": "jkl",
+      "Distance": 1233,
+      "ImagePath": "C:\\Users\\Wolfgang\\Dropbox\\FH\\4.Semester\\SWEI\\Projekte\\TourPlanner\\TourPlanner\\Images\\TourImages\\20210605_4.jpg"
+    }
+  ],
+  "Logs": [
+    {
+      "Id": 107,
+      "TourId": 113,
+      "DateTime": "17-05-2021 01:57",
+      "Report": "Nothing to report",
+      "Distance": 531,
+      "TotalTime": "4:55",
+      "Rating": 1
+    },
+    {
+      "Id": 108,
+      "TourId": 113,
+      "DateTime": "16-05-2021 11:23",
+      "Report": "Rainy Day",
+      "Distance": 531,
+      "TotalTime": "6:22",
+      "Rating": 4
+    },
+    {
+      "Id": 109,
+      "TourId": 113,
+      "DateTime": "13-05-2021 11:23",
+      "Report": "Traffic Jam",
+      "Distance": 531,
+      "TotalTime": "7:14",
+      "Rating": 5
+    },
+    {
+      "Id": 110,
+      "TourId": 114,
+      "DateTime": "01-04-2020 00:00",
+      "Report": "April fools",
+      "Distance": 707,
+      "TotalTime": "12:34",
+      "Rating": 1
+    },
+    {
+      "Id": 111,
+      "TourId": 115,
+      "DateTime": "24-12-2001 15:24",
+      "Report": "Christmas Travel",
+      "Distance": 1415,
+      "TotalTime": "22:29",
+      "Rating": 2
+    },
+    {
+      "Id": 112,
+      "TourId": 115,
+      "DateTime": "16-10-2012 09:09",
+      "Report": "Grandparents invitation",
+      "Distance": 1415,
+      "TotalTime": "21:03",
+      "Rating": 1
+    },
+    {
+      "Id": 113,
+      "TourId": 116,
+      "DateTime": "qqqq",
+      "Report": "wwww",
+      "Distance": 333,
+      "TotalTime": "eeee",
+      "Rating": 5
+    }
+  ]
+}

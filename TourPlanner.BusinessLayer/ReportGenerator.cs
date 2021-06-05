@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using TourPlanner.Models;
 using IronPdf;
-using Microsoft.Win32;
 
 namespace TourPlanner.BusinessLayer {
     public class ReportGenerator :IReportGenerator
     {
+        private ISaveFileDialog _saveFileDialog;
+        public ReportGenerator(ISaveFileDialog sfd)
+        {
+            _saveFileDialog = sfd;
+        }
         public bool GeneratePDFReportForTours(IEnumerable<Tour> tours, IEnumerable<TourLog> logs, bool summarize)
         {
-
-            SaveFileDialog sfdlg = new SaveFileDialog();  
-            sfdlg.Filter = "PDF Files (*.pdf) | *.pdf"; //Here you can filter which all files you wanted allow to open  
-            sfdlg.ShowDialog();
-            if (!sfdlg.FileName.Equals(""))
+            _saveFileDialog.Filter = "PDF Files (*.pdf) | *.pdf"; //Here you can filter which all files you wanted allow to open  
+            _saveFileDialog.ShowDialog();
+            if (!_saveFileDialog.FileName.Equals(""))
             {
                 var htmlToPdf = new HtmlToPdf();
                 var pdf = htmlToPdf.RenderHtmlAsPdf(ConvertDataToHTML(tours, logs, summarize));
-                pdf.SaveAs(sfdlg.FileName);
+                pdf.SaveAs(_saveFileDialog.FileName);
                 return true;
             }
 
