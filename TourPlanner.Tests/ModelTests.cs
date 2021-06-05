@@ -105,7 +105,7 @@ namespace TourPlanner.Tests {
         public void TourLogGetFieldValueTest_TourLogGetFieldValueReportCaseSensitive_ShouldReturnReportValue()
         {
             //arrange
-            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2);
+            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2,"Car",12,"Wolfgang",1,100);
             //act
             string reportValue = log.GetFieldValue("Report",true);
             //assert
@@ -116,7 +116,7 @@ namespace TourPlanner.Tests {
         public void TourLogGetFieldValueTest_TourLogGetFieldValueReportLowerCase_ShouldReturnReportValueLowerCase()
         {
             //arrange
-            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2);
+            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2,"Car",12,"Wolfgang",1,100);
             //act
             string reportValue = log.GetFieldValue("Report",false);
             //assert
@@ -127,7 +127,7 @@ namespace TourPlanner.Tests {
         public void TourLogGetFieldValueTest_TourLogGetFieldValueDistanceCaseSensitive_ShouldReturnDistanceValue()
         {
             //arrange
-            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2);
+            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2,"Car",12,"Wolfgang",1,100);
             //act
             string distanceValue = log.GetFieldValue("Distance",true);
             //assert
@@ -138,7 +138,7 @@ namespace TourPlanner.Tests {
         public void TourLogGetFieldValueTest_TourLogGetFieldValueDistanceLowerCase_ShouldReturnDistanceValue()
         {
             //arrange
-            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2);
+            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2,"Car",12,"Wolfgang",1,100);
             //act
             string distanceValue = log.GetFieldValue("Distance",false);
             //assert
@@ -149,7 +149,7 @@ namespace TourPlanner.Tests {
         public void TourLogGetFieldValueTest_TourLogGetUnknownField_ShouldReturnExceptionNullReference()
         {
             //arrange
-            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2);
+            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2,"Car",12,"Wolfgang",1,100);
             //act
             string nameValue = log.GetFieldValue("Name");
             //assert

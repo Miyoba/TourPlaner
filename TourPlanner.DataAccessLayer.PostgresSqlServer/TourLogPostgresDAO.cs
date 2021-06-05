@@ -14,11 +14,11 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
         private const string SqlFindByTour = "SELECT * FROM public.\"TourLog\" WHERE \"TourId\"=@TourId;";
         private const string SqlDeleteTourLog = "DELETE FROM public.\"TourLog\" WHERE \"Id\"=@Id;";
         private const string SqlEditTourLog = "UPDATE public.\"TourLog\" SET " +
-                                              "\"DateTime\"=@DateTime, \"Report\"=@Report, \"Distance\"=@Distance, " +
-                                              "\"TotalTime\"=@TotalTime, \"Rating\"=@Rating " +
+                                              "\"DateTime\"=@DateTime, \"Report\"=@Report, \"Distance\"=@Distance, \"TotalTime\"=@TotalTime, \"Rating\"=@Rating, " +
+                                              "\"Vehicle\"=@Vehicle, \"AvgSpeed\"=@AvgSpeed, \"People\"=@People, \"Breaks\"=@Breaks, \"LinearDistance\"=@LinearDistance " +
                                               "WHERE \"Id\"=@Id RETURNING \"Id\";";
-        private const string SqlInsertNewTourLog = "INSERT INTO public.\"TourLog\" (\"TourId\",\"DateTime\",\"Report\",\"Distance\",\"TotalTime\", \"Rating\") " +
-                                                   "VALUES (@TourId, @DateTime, @Report, @Distance, @TotalTime, @Rating) " +
+        private const string SqlInsertNewTourLog = "INSERT INTO public.\"TourLog\" (\"TourId\",\"DateTime\",\"Report\",\"Distance\",\"TotalTime\", \"Rating\", \"Vehicle\", \"AvgSpeed\", \"People\", \"Breaks\", \"LinearDistance\") " +
+                                                   "VALUES (@TourId, @DateTime, @Report, @Distance, @TotalTime, @Rating, @Vehicle, @AvgSpeed, @People, @Breaks, @LinearDistance) " +
                                                    "RETURNING \"Id\";";
 
         private IDatabase _database;
@@ -45,7 +45,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             return logs.FirstOrDefault();
         }
 
-        public TourLog AddNewTourLog(Tour tour, string dateTime, string report, int distance, string totalTime, int rating)
+        public TourLog AddNewTourLog(Tour tour, string dateTime, string report, int distance, string totalTime, int rating, string vehicle, int avgSpeed, string people, int breaks, int linearDistance)
         {
             DbCommand insertCommand = _database.CreateCommand(SqlInsertNewTourLog);
             _database.DefineParameter(insertCommand, "@TourId", DbType.Int32, tour.Id);
@@ -54,6 +54,11 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             _database.DefineParameter(insertCommand, "@Distance", DbType.Int32, distance);
             _database.DefineParameter(insertCommand, "@TotalTime", DbType.String, totalTime);
             _database.DefineParameter(insertCommand, "@Rating", DbType.Int32, rating);
+            _database.DefineParameter(insertCommand, "@Vehicle", DbType.String, vehicle);
+            _database.DefineParameter(insertCommand, "@AvgSpeed", DbType.Int32, avgSpeed);
+            _database.DefineParameter(insertCommand, "@People", DbType.String, people);
+            _database.DefineParameter(insertCommand, "@Breaks", DbType.Int32, breaks);
+            _database.DefineParameter(insertCommand, "@LinearDistance", DbType.Int32, linearDistance);
 
             return FindById(_database.ExecuteScalar(insertCommand));
         }
@@ -66,7 +71,7 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             _database.ExecuteScalar(deleteCommand);
         }
 
-        public TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating)
+        public TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating, string vehicle, int avgSpeed, string people, int breaks, int linearDistance)
         {
             DbCommand editCommand = _database.CreateCommand(SqlEditTourLog);
             _database.DefineParameter(editCommand, "@DateTime", DbType.String, dateTime);
@@ -74,6 +79,11 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
             _database.DefineParameter(editCommand, "@Distance", DbType.Int32, distance);
             _database.DefineParameter(editCommand, "@TotalTime", DbType.String, totalTime);
             _database.DefineParameter(editCommand, "@Rating", DbType.Int32, rating);
+            _database.DefineParameter(editCommand, "@Vehicle", DbType.String, vehicle);
+            _database.DefineParameter(editCommand, "@AvgSpeed", DbType.Int32, avgSpeed);
+            _database.DefineParameter(editCommand, "@People", DbType.String, people);
+            _database.DefineParameter(editCommand, "@Breaks", DbType.Int32, breaks);
+            _database.DefineParameter(editCommand, "@LinearDistance", DbType.Int32, linearDistance);
             _database.DefineParameter(editCommand, "@Id", DbType.Int32, tourLog.Id);
 
             return FindById(_database.ExecuteScalar(editCommand));
@@ -113,7 +123,12 @@ namespace TourPlanner.DataAccessLayer.PostgresSqlServer {
                         (string)reader["Report"],
                         (int)reader["Distance"],
                         (string)reader["TotalTime"],
-                        (int)reader["Rating"]));
+                        (int)reader["Rating"],
+                        (string)reader["Vehicle"],
+                        (int)reader["AvgSpeed"],
+                        (string)reader["People"],
+                        (int)reader["Breaks"],
+                        (int)reader["LinearDistance"]));
                 }
             }
 

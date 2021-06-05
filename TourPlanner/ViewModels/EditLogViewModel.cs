@@ -23,6 +23,11 @@ namespace TourPlanner.ViewModels {
         private int _distance;
         private string _totalTime;
         private int _rating;
+        private string _vehicle;
+        private int _avgSpeed;
+        private string _people;
+        private int _breaks;
+        private int _linearDistance;
 
         private ICommand _editLogCommand;
         private ICommand _cancelLogCommand;
@@ -95,6 +100,56 @@ namespace TourPlanner.ViewModels {
                 }
             }
         }
+        public string Vehicle
+        {
+            get => _vehicle;
+            set{
+                if (_vehicle != value) {
+                    _vehicle = value;
+                    RaisePropertyChangedEvent(nameof(Vehicle));
+                }
+            }
+        }
+        public int AvgSpeed
+        {
+            get => _avgSpeed;
+            set{
+                if (_avgSpeed != value) {
+                    _avgSpeed = value;
+                    RaisePropertyChangedEvent(nameof(AvgSpeed));
+                }
+            }
+        }
+        public string People
+        {
+            get => _people;
+            set{
+                if (_people != value) {
+                    _people = value;
+                    RaisePropertyChangedEvent(nameof(People));
+                }
+            }
+        }
+        public int Breaks
+        {
+            get => _breaks;
+            set{
+                if (_breaks != value) {
+                    _breaks = value;
+                    RaisePropertyChangedEvent(nameof(Breaks));
+                }
+            }
+        }
+        public int LinearDistance
+        {
+            get => _linearDistance;
+            set{
+                if (_linearDistance != value) {
+                    _linearDistance = value;
+                    RaisePropertyChangedEvent(nameof(LinearDistance));
+                }
+            }
+        }
 
         public EditLogViewModel(Window window, Tour tour, TourLog log, MainViewModel mainView)
         {
@@ -108,6 +163,11 @@ namespace TourPlanner.ViewModels {
             _distance = log.Distance;
             _totalTime = log.TotalTime;
             _rating = log.Rating;
+            _vehicle = log.Vehicle;
+            _avgSpeed = log.AvgSpeed;
+            _people = log.People;
+            _breaks = log.Breaks;
+            _linearDistance = log.LinearDistance;
 
             this._tourPlannerFactory = TourPlannerFactory.GetInstance();
         }
@@ -115,7 +175,7 @@ namespace TourPlanner.ViewModels {
         private void EditLog(object commandParameter)
         {
             _log.Info("Edit Log function is going to be executed.");
-            TourLog tourLog = _tourPlannerFactory.EditTourLog(_tourLog, DateTime, Report, Distance, TotalTime, Rating);
+            TourLog tourLog = _tourPlannerFactory.EditTourLog(_tourLog, DateTime, Report, Distance, TotalTime, Rating, Vehicle, AvgSpeed, People, Breaks, LinearDistance);
             if (tourLog != null)
             {
                 _mainView.Logs.Remove(_tourLog);

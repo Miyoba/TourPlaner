@@ -61,7 +61,12 @@ namespace TourPlanner.BusinessLayer {
                                     "<b>Report: </b> "+log.Report+"<br>"+ 
                                     "<b>Distance: </b> "+log.Distance+" km<br>"+ 
                                     "<b>Total-time: </b> "+log.TotalTime+" (hh:mm)<br>"+ 
-                                    "<b>Rating: </b> "+log.Rating;
+                                    "<b>Rating: </b> "+log.Rating+"<br>"+
+                                    "<b>Vehicle: </b> "+log.Vehicle+"<br>"+
+                                    "<b>Avg. Speed: </b> "+log.AvgSpeed+" km/h<br>"+
+                                    "<b>People: </b> "+log.People+"<br>"+
+                                    "<b>Travel breaks: </b> "+log.Breaks+"<br>"+
+                                    "<b>Linear Distance: </b> "+log.LinearDistance+" km";
                     }
                 }
             }

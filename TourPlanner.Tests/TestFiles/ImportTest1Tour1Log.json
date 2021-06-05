@@ -18,7 +18,12 @@
       "Report": "Report",
       "Distance": 123,
       "TotalTime": "11:03",
-      "Rating": 2
+      "Rating": 2,
+      "Vehicle": "Car",
+      "AvgSpeed": 95,
+      "People": "Wolfgang, Andreas",
+      "Breaks": 0,
+      "LinearDistance": 302
     }
   ]
 }

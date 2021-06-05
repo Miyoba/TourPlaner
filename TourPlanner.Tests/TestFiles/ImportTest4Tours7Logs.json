@@ -45,7 +45,12 @@
       "Report": "Nothing to report",
       "Distance": 531,
       "TotalTime": "4:55",
-      "Rating": 1
+      "Rating": 1,
+      "Vehicle": "Car",
+      "AvgSpeed": 95,
+      "People": "Wolfgang, Andreas",
+      "Breaks": 0,
+      "LinearDistance": 302
     },
     {
       "Id": 108,
@@ -54,7 +59,12 @@
       "Report": "Rainy Day",
       "Distance": 531,
       "TotalTime": "6:22",
-      "Rating": 4
+      "Rating": 4,
+      "Vehicle": "Car",
+      "AvgSpeed": 95,
+      "People": "Wolfgang, Andreas",
+      "Breaks": 0,
+      "LinearDistance": 302
     },
     {
       "Id": 109,
@@ -63,7 +73,12 @@
       "Report": "Traffic Jam",
       "Distance": 531,
       "TotalTime": "7:14",
-      "Rating": 5
+      "Rating": 5,
+      "Vehicle": "Car",
+      "AvgSpeed": 95,
+      "People": "Wolfgang, Andreas",
+      "Breaks": 0,
+      "LinearDistance": 302
     },
     {
       "Id": 110,
@@ -72,7 +87,12 @@
       "Report": "April fools",
       "Distance": 707,
       "TotalTime": "12:34",
-      "Rating": 1
+      "Rating": 1,
+      "Vehicle": "Car",
+      "AvgSpeed": 95,
+      "People": "Wolfgang, Andreas",
+      "Breaks": 0,
+      "LinearDistance": 302
     },
     {
       "Id": 111,
@@ -81,7 +101,12 @@
       "Report": "Christmas Travel",
       "Distance": 1415,
       "TotalTime": "22:29",
-      "Rating": 2
+      "Rating": 2,
+      "Vehicle": "Car",
+      "AvgSpeed": 95,
+      "People": "Wolfgang, Andreas",
+      "Breaks": 0,
+      "LinearDistance": 302
     },
     {
       "Id": 112,
@@ -90,7 +115,12 @@
       "Report": "Grandparents invitation",
       "Distance": 1415,
       "TotalTime": "21:03",
-      "Rating": 1
+      "Rating": 1,
+      "Vehicle": "Car",
+      "AvgSpeed": 95,
+      "People": "Wolfgang, Andreas",
+      "Breaks": 0,
+      "LinearDistance": 302
     },
     {
       "Id": 113,
@@ -99,7 +129,12 @@
       "Report": "wwww",
       "Distance": 333,
       "TotalTime": "eeee",
-      "Rating": 5
+      "Rating": 5,
+      "Vehicle": "Car",
+      "AvgSpeed": 95,
+      "People": "Wolfgang, Andreas",
+      "Breaks": 0,
+      "LinearDistance": 302
     }
   ]
 }

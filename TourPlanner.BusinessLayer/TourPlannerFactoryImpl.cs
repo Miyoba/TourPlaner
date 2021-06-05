@@ -66,6 +66,11 @@ namespace TourPlanner.BusinessLayer
                 found = FindTourLog(enumerable, found, "Distance", searchArg, caseSensitive);
                 found = FindTourLog(enumerable, found, "TotalTime", searchArg, caseSensitive);
                 found = FindTourLog(enumerable, found, "Rating", searchArg, caseSensitive);
+                found = FindTourLog(enumerable, found, "Vehicle", searchArg, caseSensitive);
+                found = FindTourLog(enumerable, found, "AvgSpeed", searchArg, caseSensitive);
+                found = FindTourLog(enumerable, found, "People", searchArg, caseSensitive);
+                found = FindTourLog(enumerable, found, "Breaks", searchArg, caseSensitive);
+                found = FindTourLog(enumerable, found, "LinearDistance", searchArg, caseSensitive);
             }
 
             return found.Distinct();
@@ -79,10 +84,10 @@ namespace TourPlanner.BusinessLayer
             return tourDao.AddNewTour(tourName, tourFromLocation, tourToLocation, tourDescription, tourDistance, imagePath);
         }
 
-        public TourLog AddTourLog(Tour tour, string dateTime, string report, int distance, string totalTime, int rating)
+        public TourLog AddTourLog(Tour tour, string dateTime, string report, int distance, string totalTime, int rating, string vehicle, int avgSpeed, string people, int breaks, int linearDistance)
         {
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
-            return tourLogDao.AddNewTourLog(tour, dateTime, report, distance, totalTime, rating);
+            return tourLogDao.AddNewTourLog(tour, dateTime, report, distance, totalTime, rating, vehicle, avgSpeed, people, breaks, linearDistance);
         }
 
         public void DeleteTour(Tour tour, string imagePath)
@@ -115,10 +120,10 @@ namespace TourPlanner.BusinessLayer
             return tourDao.EditTour(tour, tourName, tourDescription, tourFromLocation, tourToLocation, tourDistance, imagePath);
         }
 
-        public TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating)
+        public TourLog EditTourLog(TourLog tourLog, string dateTime, string report, int distance, string totalTime, int rating, string vehicle, int avgSpeed, string people, int breaks, int linearDistance)
         {
             ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
-            return tourLogDao.EditTourLog(tourLog, dateTime, report, distance, totalTime, rating);
+            return tourLogDao.EditTourLog(tourLog, dateTime, report, distance, totalTime, rating, vehicle, avgSpeed, people, breaks, linearDistance);
         }
 
         public bool ExportData()
@@ -146,7 +151,7 @@ namespace TourPlanner.BusinessLayer
                 {
                     if (tour.Id == log.TourId)
                     {
-                        AddTourLog(dbTour, log.DateTime, log.Report, log.Distance, log.TotalTime, log.Rating);
+                        AddTourLog(dbTour, log.DateTime, log.Report, log.Distance, log.TotalTime, log.Rating, log.Vehicle, log.AvgSpeed, log.People, log.Breaks, log.LinearDistance);
                     }
                 }
             }

@@ -29,7 +29,7 @@ namespace TourPlanner.Tests
             IDataFileManager dfm = new DataFileManager(saveDialog.Object,openDialog.Object);
 
             Tour tour = new Tour(1, "Name", "Description", "Wien", "Berlin", 123);
-            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2);
+            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2,"Car",12,"Wolfgang",1,100);
 
             List<Tour> tourList = new List<Tour>() {tour};
             List<TourLog> logList = new List<TourLog>() {log};
@@ -65,7 +65,7 @@ namespace TourPlanner.Tests
             IDataFileManager dfm = new DataFileManager(saveDialog.Object,openDialog.Object);
 
             Tour tour = new Tour(1, "Name", "Description", "Wien", "Berlin", 123);
-            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2);
+            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2,"Car",12,"Wolfgang",1,100);
 
             List<Tour> tourList = new List<Tour>() {tour};
             List<TourLog> logList = new List<TourLog>() {log};
@@ -253,7 +253,7 @@ namespace TourPlanner.Tests
             IReportGenerator rg = new ReportGenerator(saveDialog.Object);
 
             Tour tour = new Tour(1, "Name", "Description", "Wien", "Berlin", 123);
-            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2);
+            TourLog log = new TourLog(1, 1, "05-12-2021 18:23","Report",123,"11:03",2,"Car",12,"Wolfgang",1,100);
 
             List<Tour> tourList = new List<Tour>() {tour};
             List<TourLog> logList = new List<TourLog>() {log};

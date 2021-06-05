@@ -23,6 +23,11 @@ namespace TourPlanner.ViewModels {
         private int _distance;
         private string _totalTime;
         private int _rating;
+        private string _vehicle;
+        private int _avgSpeed;
+        private string _people;
+        private int _breaks;
+        private int _linearDistance;
 
         private ICommand _addLogCommand;
         private ICommand _cancelLogCommand;
@@ -95,6 +100,56 @@ namespace TourPlanner.ViewModels {
                 }
             }
         }
+        public string Vehicle
+        {
+            get => _vehicle;
+            set{
+                if (_vehicle != value) {
+                    _vehicle = value;
+                    RaisePropertyChangedEvent(nameof(Vehicle));
+                }
+            }
+        }
+        public int AvgSpeed
+        {
+            get => _avgSpeed;
+            set{
+                if (_avgSpeed != value) {
+                    _avgSpeed = value;
+                    RaisePropertyChangedEvent(nameof(AvgSpeed));
+                }
+            }
+        }
+        public string People
+        {
+            get => _people;
+            set{
+                if (_people != value) {
+                    _people = value;
+                    RaisePropertyChangedEvent(nameof(People));
+                }
+            }
+        }
+        public int Breaks
+        {
+            get => _breaks;
+            set{
+                if (_breaks != value) {
+                    _breaks = value;
+                    RaisePropertyChangedEvent(nameof(Breaks));
+                }
+            }
+        }
+        public int LinearDistance
+        {
+            get => _linearDistance;
+            set{
+                if (_linearDistance != value) {
+                    _linearDistance = value;
+                    RaisePropertyChangedEvent(nameof(LinearDistance));
+                }
+            }
+        }
 
         public AddLogViewModel(Window window, Tour tour, MainViewModel mainView)
         {
@@ -109,7 +164,7 @@ namespace TourPlanner.ViewModels {
         private void AddLog(object commandParameter)
         {
             _log.Info("Add Log function is going to be executed.");
-            TourLog tourLog = _tourPlannerFactory.AddTourLog(_tour, _dateTime, _report, _distance, _totalTime, _rating);
+            TourLog tourLog = _tourPlannerFactory.AddTourLog(_tour, _dateTime, _report,_distance, _totalTime, _rating, _vehicle, _avgSpeed, _people, _breaks, _linearDistance);
             _mainView.Logs.Add(tourLog);
             _window.Close();
         }

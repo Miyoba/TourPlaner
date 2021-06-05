@@ -6,9 +6,14 @@
         xmlns:viewModels="clr-namespace:TourPlanner.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewModels:EditLogViewModel}"
         mc:Ignorable="d"
-        Title="EditLogWindow" Height="450" Width="800" SizeToContent="WidthAndHeight">
+        Title="EditLogWindow" Height="700" Width="800" SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -23,6 +28,11 @@
         <Border Grid.Row="3" BorderThickness="0.5" BorderBrush="Gray"/>
         <Border Grid.Row="4" BorderThickness="0.5" BorderBrush="Gray"/>
         <Border Grid.Row="5" BorderThickness="0.5" BorderBrush="Gray"/>
+        <Border Grid.Row="6" BorderThickness="0.5" BorderBrush="Gray"/>
+        <Border Grid.Row="7" BorderThickness="0.5" BorderBrush="Gray"/>
+        <Border Grid.Row="8" BorderThickness="0.5" BorderBrush="Gray"/>
+        <Border Grid.Row="9" BorderThickness="0.5" BorderBrush="Gray"/>
+        <Border Grid.Row="10" BorderThickness="0.5" BorderBrush="Gray"/>
 
         <Grid Row="0">
             <Grid.ColumnDefinitions>
@@ -78,6 +88,51 @@
         </Grid>
 
         <Grid Row="6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Margin="0,5,0,0" Content="Vehicle:"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding Vehicle, Mode=OneWayToSource}"/>
+        </Grid>
+
+        <Grid Row="7">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Margin="0,5,0,0" Content="Average Speed (km):"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding AvgSpeed, Mode=OneWayToSource, FallbackValue=0}" PreviewTextInput="NumbersOnly"/>
+        </Grid>
+
+        <Grid Row="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Margin="0,5,0,0" Content="People:"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding People, Mode=OneWayToSource}"/>
+        </Grid>
+
+        <Grid Row="9">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Margin="0,5,0,0" Content="Breaks:"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding Breaks, Mode=OneWayToSource, FallbackValue=0}" PreviewTextInput="NumbersOnly"/>
+        </Grid>
+
+        <Grid Row="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Margin="0,5,0,0" Content="Linear Distance (km):"/>
+            <TextBox Grid.Row="1" Margin="5,0,5,10" Text="{Binding LinearDistance, Mode=OneWayToSource, FallbackValue=0}" PreviewTextInput="NumbersOnly"/>
+        </Grid>
+
+        <Grid Row="11">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Margin="5px" Padding="2px" MaxHeight="20" Content="Edit" Command="{Binding EditLogCommand}"/>
                 <Button Margin="5px" Padding="2px" MaxHeight="20" Content="Cancel" Command="{Binding CancelLogCommand}"/>
